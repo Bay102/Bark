@@ -1,15 +1,45 @@
-  const favesDiv = document.getElementById("faves");   
-  const adoptCardsDiv = document.getElementById("adoptionCards"); 
+const favesDiv = document.getElementById("faves");
+const adoptCardsDiv = document.getElementById("adoptionCards");
+const favButton = document.getElementsByClassName("addToFav");
+const removeFav = document.getElementsByClassName("removeFav");
 
 const getData = async () => {
   return await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=30")
-  .then((res) => res.json())
-  .then(data => data.data); 
+    .then((res) => res.json())
+    .then((data) => data.data);
+};
+
+function eventListeners(className,div) {
+  for (const elm of className) {
+    elm.addEventListener("click", (e) => {
+      let parent = e.target.parentElement;
+      div.append(parent);
+    });
+  }
 }
 
-const createSingleCard = (dog) => { 
-    dogDiv = document.createElement("div");
-      dogDiv.innerHTML = ` 
+
+// function add(className) {
+//   for (const elm of className) {
+//     elm.addEventListener("click", (e) => {
+//       let parent = e.target.parentElement;
+//       favesDiv.append(parent);
+//     });
+//   }
+// }
+
+// function remove(className) {
+//   for (const elm of className) {
+//     elm.addEventListener("click", (e) => {
+//       let parent = e.target.parentElement;
+//       adoptCardsDiv.append(parent);
+//     });
+//   }
+// }
+
+const createSingleCard = (dog) => {
+  dogDiv = document.createElement("div");
+  dogDiv.innerHTML = ` 
       <div class="cardsClass">   
       <h2> ${dog.name} </h2> 
       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus" onClick="add"></i>
@@ -21,14 +51,19 @@ const createSingleCard = (dog) => {
       </div>          
       </div>
       `;
-      adoptCardsDiv.appendChild(dogDiv);
-  }
+      eventListeners(favButton, favesDiv);
+      eventListeners(removeFav, adoptCardsDiv)
+  // add(favButton);
+  // remove(removeFav);
+
+  adoptCardsDiv.appendChild(dogDiv);
+};
 
 const createAllCards = (data) => {
   data.map((data) => {
-    createSingleCard(data)
-  })
-}
+    createSingleCard(data);
+  });
+};
 
 // const addEventListeners = (className) => {
 //  const querySel = document.querySelector(className)
@@ -37,26 +72,11 @@ const createAllCards = (data) => {
 //  })
 // }
 
-  
-
 const createInitialAppState = async () => {
   data = await getData();
   createAllCards(data);
-  // add()
-  // addEventListeners('addToFav')
-}
+};
 createInitialAppState();
-
- const favButton = document.getElementsByClassName("addToFav"); 
- const removeFav = document.getElementsByClassName("removeFav"); 
-
-  // function add() {
-  // querySelector('addToFav').addEventListener('click', (e) => {
-  //  let parent = e.target.parentElement;
-  //  favesDiv.append(parent)
-  // })
-
-
 
 // removeFav.style.display = "none";
 
@@ -72,9 +92,3 @@ createInitialAppState();
 //         favButton.style.display = "block";
 //         removeFav.style.display = "none";
 //       });
- 
-
-
-
-
-  
