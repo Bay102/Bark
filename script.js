@@ -1,49 +1,44 @@
-const favesDiv = document.getElementById("faves");
-const adoptCardsDiv = document.getElementById("adoptionCards");
-const favButton = document.getElementsByClassName("addToFav");
-const removeFav = document.getElementsByClassName("removeFav");
-
 const getData = async () => {
   return await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=30")
     .then((res) => res.json())
     .then((data) => data.data);
 };
 
-function eventListeners(className,div) {
-  for (const elm of className) {
-    elm.addEventListener("click", (e) => {
-      let parent = e.target.parentElement;
-      div.append(parent);
+const favesDiv = document.getElementById("faves");
+const adoptCardsDiv = document.getElementById("adoptionCards");
+const getFavButtons = () => document.getElementsByClassName("addToFav");
+const getRemoveFavButtons = () => document.getElementsByClassName("removeFav");
+
+const addEventListeners = (favBtns, removeBtns) => {
+  for (const button of favBtns) {
+    button.addEventListener("click", (e) => {
+      let parent = e.target.parentElement.parentElement;
+      favesDiv.append(parent);
+      button.classList.add("is-not-visible");
+      for (const button of removeBtns) {
+        button.classList.remove('is-not-visible')
+      }
     });
   }
-}
-
-
-// function add(className) {
-//   for (const elm of className) {
-//     elm.addEventListener("click", (e) => {
-//       let parent = e.target.parentElement;
-//       favesDiv.append(parent);
-//     });
-//   }
-// }
-
-// function remove(className) {
-//   for (const elm of className) {
-//     elm.addEventListener("click", (e) => {
-//       let parent = e.target.parentElement;
-//       adoptCardsDiv.append(parent);
-//     });
-//   }
-// }
+  for (const button of removeBtns) {
+    button.addEventListener("click", (e) => {
+      let parent = e.target.parentElement.parentElement;
+      adoptCardsDiv.append(parent);
+      button.classList.remove("is-not-visible");
+      for (const buttons of favBtns) {
+        buttons.classList.remove('is-not-visible')
+      }
+    });
+  }
+};
 
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.innerHTML = ` 
       <div class="cardsClass">   
       <h2> ${dog.name} </h2> 
-      <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus" onClick="add"></i>
-      <i class="removeFav fa-solid fa-heart-crack"></i> 
+      <i class="addToFav  fa-sharp fa-solid fa-heart-circle-plus"></i>
+      <i class="removeFav is-not-visible fa-solid fa-heart-crack"></i> 
       <img src=${dog.photoUrl} >
       <div class="info-wrapper">   
       <div> <strong> Breed : </strong> ${dog.breed} </div>  
@@ -51,11 +46,7 @@ const createSingleCard = (dog) => {
       </div>          
       </div>
       `;
-      eventListeners(favButton, favesDiv);
-      eventListeners(removeFav, adoptCardsDiv)
-  // add(favButton);
-  // remove(removeFav);
-
+  addEventListeners(getFavButtons(), getRemoveFavButtons());
   adoptCardsDiv.appendChild(dogDiv);
 };
 
@@ -65,30 +56,10 @@ const createAllCards = (data) => {
   });
 };
 
-// const addEventListeners = (className) => {
-//  const querySel = document.querySelector(className)
-//  className.querySel.addEventListener('click', (e) => {
-
-//  })
-// }
-
-const createInitialAppState = async () => {
+const launchCards = async () => {
   data = await getData();
   createAllCards(data);
 };
-createInitialAppState();
+launchCards();
 
-// removeFav.style.display = "none";
-
-//       favButton.addEventListener("click", (e) => {
-//         let parent = e.target.parentElement; // the parent element of the event target ?
-//         dogDiv.append(parent);
-//         removeFav.style.display = "block";
-//         favButton.style.display = "none";
-//       });
-//       removeFav.addEventListener("click", (e) => {
-//         let parent = e.target.parentElement;
-//         adoptCardsDiv.append(parent);
-//         favButton.style.display = "block";
-//         removeFav.style.display = "none";
-//       });
+// addEventListeners(getFavButtons(),getRemoveFavButtons())

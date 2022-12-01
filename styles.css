@@ -108,13 +108,10 @@ ul {
 }
 
 .addToFav, .removeFav {
+
    font-size: 30px;
    margin: auto;
    margin-bottom: 15px;
-}
-
-.removeFav {
-   opacity: 1;
 }
 
 .addToFav:hover {
@@ -122,7 +119,6 @@ ul {
    border-radius: 180px;
 }
 
-.is-visible {
-   opacity: 1;
+.is-not-visible {
+   display: none;
 }
-
