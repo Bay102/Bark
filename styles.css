@@ -2,7 +2,6 @@ body {
    background-image: url("");
 }
 
-
 ul {
    list-style: none;
 }
@@ -43,7 +42,6 @@ ul {
    line-height: 1.42;
 }
 
-
 .main-menu { display: flex; }
 
 .main-menu .nav-item {
@@ -54,15 +52,14 @@ ul {
    text-transform: lowercase;
 }
 
-
 .cardsClass {
    display: flex;
    flex-wrap: wrap;
    flex-direction: column;
    border: 1px solid black;
    border-radius: 10px;
-   width: 250px;
-   height: fit-content;
+   width: 650px;
+   height: 450px;
    text-align: center;
    margin: 10px auto;
    padding: 20px;
@@ -71,6 +68,7 @@ ul {
 
 #adoptionCards {
    display: flex;
+   flex-direction: column;
    flex-wrap: nowrap;
    margin: auto;
    gap: 40px;
@@ -79,7 +77,8 @@ ul {
 }
 
 .cards-wrapper {
- 
+ height: 650px;
+ overflow: scroll;
 }
 
 .cardsClass img {
@@ -108,7 +107,6 @@ ul {
 }
 
 .addToFav, .removeFav {
-
    font-size: 30px;
    margin: auto;
    margin-bottom: 15px;
