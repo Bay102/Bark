@@ -15,11 +15,12 @@ const createSingleCard = (dog) => {
       <div class="cardsClass">   
       <div class=card-header>
       <img class="card-header-img" src="${dog.photoUrl}">
+      <div class="info-wrapper">  
       <h2> ${dog.name} </h2> 
-       <div class="info-wrapper">   
-      <div>${dog.breed}</div>  
-      <div>${dog.age}</div> 
+      <div>${dog.breed} - ${dog.age}</div>  
+     
       </div>
+      <i class="fa-solid fa-ellipsis"></i>
       </div>
       <img  class="main-card-image" src=${dog.photoUrl} >
       <div class="below-image-bar">
