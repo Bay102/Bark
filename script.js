@@ -40,7 +40,6 @@ const adoptCardsDiv = document.getElementById("adoptionCards");
 const getFavButtons =  document.getElementsByClassName("addToFav"); 
 const getRemoveFavButtons = document.getElementsByClassName("removeFav"); 
 
-// const brokenHeart = () => document.querySelectorAll('fa-heart-crack'); 
 
 
 const addEventListenersToFav = (favBtns) => {
