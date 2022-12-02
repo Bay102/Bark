@@ -10,14 +10,25 @@ const adoptCardsDiv = document.getElementById("adoptionCards");
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.innerHTML = ` 
+
+     
       <div class="cardsClass">   
+      <div class=card-header>
+      <img class="card-header-img" src="${dog.photoUrl}">
       <h2> ${dog.name} </h2> 
+      </div>
+      <img  class="main-card-image" src=${dog.photoUrl} >
+      <div class="below-image-bar">
+      <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
+      <i class="fa-regular fa-comment"></i> 
+      <i class="fa-solid fa-share-from-square"></i>
       <div class="info-wrapper">   
       <div> <strong> Breed : </strong> ${dog.breed} </div>  
+      <br>
       <div> <strong> Age: </strong> ${dog.age}</div> 
+      </div>
       </div>  
-      <img src=${dog.photoUrl} >
-      <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>     
+      <input class="textarea" name="" type="text" placeholder="Comment...">    
       </div>
       `;
   adoptCardsDiv.appendChild(dogDiv);
@@ -90,3 +101,7 @@ for (const elm of closeModal) { // close modal buttons
       this.parentElement.parentElement.parentElement.classList.remove(isVisible)
    })
 }
+
+
+
+// how to sort cards alphabetically ? 
