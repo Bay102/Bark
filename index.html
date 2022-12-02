@@ -6,11 +6,12 @@
    <script src="https://kit.fontawesome.com/67890cb4aa.js" crossorigin="anonymous"></script>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="/styles.css">
-   <title>Dog Api</title>
+   <title>BARK!</title>
 </head>
 <body>
-
-   <header class="site-header">
+    <main>
+<!-- DOG CARDS -->
+      <header class="site-header">
       <nav class="navbar">
         <div class="brand-logo">
           <a href="/"><img class="nav-logo" src="" alt=""/></a>
@@ -20,24 +21,39 @@
         </h4>
         <div class="navbar-nav">
           <ul class="ul-defaults-none main-menu">
+            <li class="nav-item" data-open="favorites">Favorites</li>
             <li class="nav-item" data-open="newclients">ADOPT</li>
             <li class="nav-item" data-open="rates">VOLUNTEER</li>
             <li class="nav-item" data-open="contact">DONATE</li>
-            <li class="nav-item" data-open="about">About</li>
             <li class="nav-item" data-open="reviews">Reviews</li>
           </ul>
         </div>
       </nav>
     </header>
-
-<!-- DOG CARDS -->
-  <section class="cards-wrapper">
-   <div id="adoptionCards"></div> 
+<!-- ADOPTION CARDS -->
+ <div id="adoptionCards"></div>
+  <section class="adoption-cards-wrapper">
+   
   </section>
-         
-   <div class="favs-header">Favorites</div>  
+   
+     
+   
+
+
+
+
+<!-- MODAL  -->
+<div id="favorites" class="full-site-modal" data-animation="zoomInOut">
+  <div class="container-fluid">
+    <header class="modal-header">
+    <h3>Favorites</h3>
+    <i class="fas fa-times" data-close></i>
+  </header>
+  <div class="favs-header">Favorites</div>  
    <div id="faves"></div>  
- 
+    </main>
+</div>
+  </div>
 
    <script src="/script.js"></script>
 </body>
