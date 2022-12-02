@@ -52,7 +52,7 @@ const getFavButtons = document.getElementsByClassName("addToFav");
 const addEventListenersToFav = (faveBtns) => {
   for (const button of faveBtns) {
     button.addEventListener("click", (e) => {
-      let parent = e.target.parentElement.parentElement;
+      let parent = e.target.parentElement.parentElement.parentElement;
       button.classList.add("fa-heart-crack");
       button.classList.remove("fa-heart-circle-plus");
       button.classList.remove("addToFav");
@@ -68,7 +68,7 @@ const getRemoveFavButtons = document.getElementsByClassName("removeFav");
 const addEventListenersToUnFav = (removeBtns) => {
   for (const button of removeBtns) {
     button.addEventListener("click", (e) => {
-      let parent = e.target.parentElement.parentElement;
+      let parent = e.target.parentElement.parentElement.parentElement;
       adoptCardsDiv.append(parent);
       button.classList.remove("fa-heart-crack");
       button.classList.add("fa-heart-circle-plus");
