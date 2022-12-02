@@ -11,9 +11,7 @@ const adoptCardsDiv = document.getElementById("adoptionCards");
 
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
-  dogDiv.innerHTML = ` 
-
-     
+  dogDiv.innerHTML = `      
       <div class="cardsClass">   
       <div class=card-header>
       <img class="card-header-img" src="${dog.photoUrl}">
