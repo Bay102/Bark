@@ -1,5 +1,5 @@
 const getData = async () => {
-  return await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=30")
+  return await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=3")
     .then((res) => res.json())
     .then((data) => data.data);
 };
@@ -16,17 +16,17 @@ const createSingleCard = (dog) => {
       <div class=card-header>
       <img class="card-header-img" src="${dog.photoUrl}">
       <h2> ${dog.name} </h2> 
+       <div class="info-wrapper">   
+      <div>${dog.breed}</div>  
+      <div>${dog.age}</div> 
+      </div>
       </div>
       <img  class="main-card-image" src=${dog.photoUrl} >
       <div class="below-image-bar">
       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
       <i class="fa-regular fa-comment"></i> 
       <i class="fa-solid fa-share-from-square"></i>
-      <div class="info-wrapper">   
-      <div> <strong> Breed : </strong> ${dog.breed} </div>  
-      <br>
-      <div> <strong> Age: </strong> ${dog.age}</div> 
-      </div>
+     
       </div>  
       <input class="textarea" name="" type="text" placeholder="Comment...">    
       </div>
