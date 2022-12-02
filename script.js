@@ -1,5 +1,7 @@
 const getData = async () => {
-  return await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=3")
+  return await fetch(
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
+  )
     .then((res) => res.json())
     .then((data) => data.data);
 };
@@ -25,8 +27,8 @@ const createSingleCard = (dog) => {
       <div class="below-image-bar">
       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
       <i class="fa-regular fa-comment"></i> 
+      <i class="fa-solid fa-hand-holding-dollar"></i>
       <i class="fa-solid fa-share-from-square"></i>
-     
       </div>  
       <input class="textarea" name="" type="text" placeholder="Comment...">    
       </div>
@@ -78,30 +80,30 @@ const addEventListenersToUnFav = (removeBtns) => {
   }
 };
 
-const modalOpen = '[data-open]';
-const modalClose = '[data-close]';
-const isVisible = 'is-visible';
+const modalOpen = "[data-open]";
+const modalClose = "[data-close]";
+const isVisible = "is-visible";
 
-// this will store any element that has "[data-open]" in a node list 
+// this will store any element that has "[data-open]" in a node list
 const openModal = document.querySelectorAll(modalOpen);
 
-// this will store any element that has "[data-close]" in a node list 
+// this will store any element that has "[data-close]" in a node list
 const closeModal = document.querySelectorAll(modalClose);
 
-// for of loop to iterate through node list of queried elements and adding eventlistener to each one 
-for (const elm of openModal) { // open Modal buttons
-   elm.addEventListener('click', function() {
-      const modalId = this.dataset.open;  // "this" is referring to the parent Element
-      document.getElementById(modalId).classList.add(isVisible)
-   })
+// for of loop to iterate through node list of queried elements and adding eventlistener to each one
+for (const elm of openModal) {
+  // open Modal buttons
+  elm.addEventListener("click", function () {
+    const modalId = this.dataset.open; // "this" is referring to the parent Element
+    document.getElementById(modalId).classList.add(isVisible);
+  });
 }
 
-for (const elm of closeModal) { // close modal buttons 
-   elm.addEventListener('click', function() {
-      this.parentElement.parentElement.parentElement.classList.remove(isVisible)
-   })
+for (const elm of closeModal) {
+  // close modal buttons
+  elm.addEventListener("click", function () {
+    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+  });
 }
 
-
-
-// how to sort cards alphabetically ? 
+// how to sort cards alphabetically ?
