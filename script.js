@@ -18,7 +18,6 @@ const createSingleCard = (dog) => {
       <div class="info-wrapper">  
       <h2> ${dog.name} </h2> 
       <div>${dog.breed} - ${dog.age}</div>  
-     
       </div>
       <i class="fa-solid fa-ellipsis"></i>
       </div>

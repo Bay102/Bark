@@ -1,0 +1,37 @@
+@media screen and (max-width: 400px) {
+   body {
+     margin: auto;
+   }
+ 
+   h2 {
+     font-family: Arial, Helvetica, sans-serif;
+     font-size: 30px;
+     margin: 0;
+     padding: 15px 0px;
+   }
+ 
+   .site-header {
+     width: 100%;
+     height: fit-content;
+   }
+ 
+   .navbar {
+     flex-direction: column;
+   }
+ 
+   .navbar-nav {
+     margin: 0;
+   }
+ 
+   .cardsClass {
+     width: 98%;
+   }
+ 
+   .info-wrapper {
+     margin: 0;
+     flex-direction: column;
+     text-align: left;
+     line-height: 0.15;
+   }
+ }
+ 
