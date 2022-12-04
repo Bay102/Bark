@@ -21,7 +21,7 @@ const createSingleCard = (dog) => {
       </div>
       <i class="fa-solid fa-ellipsis"></i>
       </div>
-      <img  class="main-card-image" src=${dog.photoUrl} >
+      <img class="main-card-image" src=${dog.photoUrl} >
       <div class="below-image-bar">
       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
       <i class="fa-regular fa-comment"></i> 
@@ -41,8 +41,9 @@ const createAllCards = (data) => {
   addEventListenersToFav(getFavButtons);
 };
 
+
 const launchCards = async () => {
-  data = await getData();
+  const data = await getData();
   createAllCards(data);
 };
 launchCards();
@@ -104,4 +105,26 @@ for (const elm of closeModal) {
   });
 }
 
-// how to sort cards alphabetically ?
+
+let mainData = async () => {
+  let data = await getData();
+  sortedAZ = data.sort((a, b) => {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
+  });
+  return sortedAZ
+};
+
+const sortedData = mainData().then(AZdata => {
+return AZdata
+});
+
+// sortedData
+
+// console.log(await sortedData);
+
