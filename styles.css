@@ -3,7 +3,7 @@ body {
   background-size:155%;
   color: white;
   overflow-x: hidden;
-  background-color: rgba(49, 47, 46, 0.296);
+  background-color: #00000080;
 }
 
 
@@ -24,17 +24,21 @@ h4 {
    background-color: black;
   /* background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images"); */
   /* background-size: cover; */
-  width: 40%;
+  width: 500px;
   margin: -10px auto 1px auto;
   height: 120px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -10px;
 }
 
 .navbar {
   display: flex;
   flex-flow: row nowrap;
-  padding: (0.5rem 1rem);
+
   width: 100%;
   height: inherit;
   align-items: center;
@@ -128,6 +132,7 @@ h4 {
   margin: auto;
   gap: 2px;
   overflow-x: scroll;
+  margin-top: 100px;
 }
 
 .adoption-cards-wrapper {

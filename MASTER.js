@@ -124,7 +124,11 @@ const sortedData = mainData().then(AZdata => {
 return AZdata
 });
 
+sortedData
+
 // sortedData
 
 // console.log(await sortedData);
 
+
+//// 
