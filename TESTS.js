@@ -189,7 +189,8 @@ addEventListenersSorting(sortButtonAZ, sortButtonZA);
   const totalSum = sum.reduce((acc,val) => acc + val,0);
   return totalSum; 
 } 
-const age = totalAge().then(res => res);
+const age = totalAge(); age
+// .then(res => res); age
 
 
 const getNumberBox = document.getElementsByClassName('number') 
