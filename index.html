@@ -10,7 +10,6 @@
    <title>BARK!</title>
 </head>
 <body>
-    <main>
 <!-- DOG CARDS -->
       <header class="site-header">
       <nav class="navbar">
@@ -21,15 +20,23 @@
         <div class="navbar-nav">
           <ul class="ul-defaults-none main-menu">
             <li class="nav-item" data-open="favorites">Favorites</li>
-            <li class="nav-item" data-open="newclients"><i class="fa-solid fa-arrow-down-a-z"></i></li>
-            <li class="nav-item" data-open="rates"><i class="fa-solid fa-arrow-up-z-a"></i></li>
+            <li class="nav-item" data-open="newclients">
+              <i class="fa-solid fa-arrow-down-a-z"></i></li>
+            <li class="nav-item" data-open="rates">
+              <i class="fa-solid fa-arrow-up-z-a"></i></li>
             <li class="nav-item" data-open="contact">DONATE</li>
+            <div class="number"></div>
           </ul>
         </div>
       </nav>
     </header>
+
 <!-- ADOPTION CARDS -->
  <div id="adoptionCards"></div>
+
+
+
+
 
 <!-- MODAL  -->
 <div id="favorites" class="full-site-modal" data-animation="zoomInOut">
@@ -40,13 +47,11 @@
   </header>
   <div class="favs-header"></div>  
    <div id="faves"></div>  
-    </main>
+    
 </div>
   </div>
 
-   <script src="/MASTER.js"></script>
-   
-
-   <!-- <script src="/TESTS.js"></script> -->
+   <!-- <script src="/MASTER.js"></script> -->
+   <script src="/TESTS.js"></script>
 </body>
 </html>

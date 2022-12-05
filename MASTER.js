@@ -33,14 +33,13 @@ const createSingleCard = (dog) => {
       `;
   adoptCardsDiv.appendChild(dogDiv);
 };
- 
+
 const createAllCards = (data) => {
   data.map((data) => {
     createSingleCard(data);
   });
   addEventListenersToFav(getFavButtons);
 };
-
 
 const launchCards = async () => {
   const data = await getData();
@@ -105,8 +104,9 @@ for (const elm of closeModal) {
   });
 }
 
+// SORTING //
 
-let mainData = async () => {
+let sortedFrontwards = async () => {
   let data = await getData();
   sortedAZ = data.sort((a, b) => {
     if (a.name > b.name) {
@@ -117,18 +117,50 @@ let mainData = async () => {
     }
     return 0;
   });
-  return sortedAZ
+  return sortedAZ;
 };
 
-const sortedData = mainData().then(AZdata => {
-return AZdata
-});
+const sortedBackwards = async () => {
+  let data = await getData();
+  sortedZA = data.sort((a, b) => {
+    if (b.name > a.name) {
+      return 1;
+    }
+    if (b.name < a.name) {
+      return -1;
+    }
+    return 0;
+  });
+  return sortedZA;
+};
 
-sortedData
+const launchSortCardsAZ = async () => {
+  // need to remove unsorted card
+  const data = await sortedFrontwards();
+  createAllCards(data);
+};
 
-// sortedData
+const sortButtonAZ = document.getElementsByClassName("fa-arrow-down-a-z");
 
-// console.log(await sortedData);
+const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
+const launchSortCardsZA = async () => {
+  const data = await sortedBackwards();
+  createAllCards(data);
+};
 
-//// 
+// why cant i just add event lister to button itself
+
+const addEventListenersSorting = (AZ, ZA) => {
+  for (const button of AZ) {
+    button.addEventListener("click", () => {
+      launchSortCardsAZ();
+    });
+  }
+  for (const button of ZA) {
+    button.addEventListener("click", () => {
+      launchSortCardsZA();
+    });
+  }
+};
+addEventListenersSorting(sortButtonAZ, sortButtonZA);

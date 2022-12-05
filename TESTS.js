@@ -2,9 +2,9 @@ const getData = async () => {
   return await fetch(
     "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
   )
-    .then((res) => res.json())
-    .then((data) => data.data);
-};
+    .then((res) => res.json()) 
+    .then((data) => data.data); 
+}; 
 
 const favesDiv = document.getElementById("faves");
 const adoptCardsDiv = document.getElementById("adoptionCards");
@@ -41,12 +41,20 @@ const createAllCards = (data) => {
   addEventListenersToFav(getFavButtons);
 };
 
-
 const launchCards = async () => {
   const data = await getData();
   createAllCards(data);
 };
 launchCards();
+
+// let regularLaunch = true;
+// if (regularLaunch === true) {
+//   launchCards();
+// }
+ 
+
+
+/////// FAVORITE / UN-FAVORITE /////////
 
 const getFavButtons = document.getElementsByClassName("addToFav");
 
@@ -79,6 +87,8 @@ const addEventListenersToUnFav = (removeBtns) => {
   }
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
 const isVisible = "is-visible";
@@ -105,8 +115,13 @@ for (const elm of closeModal) {
   });
 }
 
+////////// SORTING //////////////
 
-let mainData = async () => {
+
+const sortButtonAZ = document.getElementsByClassName("fa-arrow-down-a-z");
+
+
+let sortedFrontwards = async () => {
   let data = await getData();
   sortedAZ = data.sort((a, b) => {
     if (a.name > b.name) {
@@ -117,14 +132,66 @@ let mainData = async () => {
     }
     return 0;
   });
-  return sortedAZ
+  return sortedAZ;
 };
 
-const sortedData = mainData().then(AZdata => {
-return AZdata
-});
 
-// sortedData
+const launchSortCardsAZ = async () => {
+  // need to remove unsorted card
+  const data = await sortedFrontwards();
+  createAllCards(data);
+};
 
-// console.log(await sortedData);
+const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
+const sortedBackwards = async () => {
+  let data = await getData();
+  sortedZA = data.sort((a, b) => {
+    if (b.name > a.name) {
+      return 1;
+    }
+    if (b.name < a.name) {
+      return -1;
+    }
+    return 0;
+  });
+  return sortedZA;
+};
+
+const launchSortCardsZA = async () => {
+  const data = await sortedBackwards();
+  createAllCards(data);
+};
+
+////////////  SORTING EVENT LISTENERS /////////////////        why cant i just add event lister to button its-self
+
+const addEventListenersSorting = (AZ, ZA) => {
+  for (const button of AZ) {
+    button.addEventListener("click", () => {
+      launchSortCardsAZ();
+    });
+  }
+  for (const button of ZA) {
+    button.addEventListener("click", () => {
+      launchSortCardsZA();
+    });
+  }
+};
+addEventListenersSorting(sortButtonAZ, sortButtonZA);
+
+
+
+////// Total Age /////////
+
+ const totalAge = async () => {
+  const data = await getData(); 
+  const sum = data.map((dog) => dog.age); 
+  const totalSum = sum.reduce((acc,val) => acc + val,0);
+  return totalSum; 
+} 
+const age = totalAge().then(res => res);
+
+
+const getNumberBox = document.getElementsByClassName('number') 
+
+getNumberBox.innerHTML = age
