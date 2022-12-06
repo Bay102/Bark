@@ -1,10 +1,16 @@
+let dogs;
+let age;
+
 const getData = async () => {
-  return await fetch(
+  dataFetch = await fetch(
     "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
-  )
-    .then((res) => res.json()) 
-    .then((data) => data.data); 
-}; 
+  );
+  const json = await dataFetch.json();
+  dogs = json.data;
+  createAllCards(dogs);
+  totalAge(dogs);
+};
+getData();
 
 const favesDiv = document.getElementById("faves");
 const adoptCardsDiv = document.getElementById("adoptionCards");
@@ -12,47 +18,34 @@ const adoptCardsDiv = document.getElementById("adoptionCards");
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.innerHTML = `      
-      <div class="cardsClass">   
-      <div class=card-header>
-      <img class="card-header-img" src="${dog.photoUrl}">
-      <div class="info-wrapper">  
-      <h2> ${dog.name} </h2> 
-      <div>${dog.breed} - ${dog.age}</div>  
-      </div>
-      <i class="fa-solid fa-ellipsis"></i>
-      </div>
-      <img class="main-card-image" src=${dog.photoUrl} >
-      <div class="below-image-bar">
-      <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
-      <i class="fa-regular fa-comment"></i> 
-      <i class="fa-solid fa-hand-holding-dollar"></i>
-      <i class="fa-solid fa-share-from-square"></i>
-      </div>  
-      <input class="textarea" name="" type="text" placeholder="Comment...">    
-      </div>
-      `;
+       <div class="cardsClass">   
+       <div class=card-header>
+       <img class="card-header-img" src="${dog.photoUrl}">
+       <div class="info-wrapper">  
+       <h2> ${dog.name} </h2> 
+       <div>${dog.breed} - ${dog.age}</div>  
+       </div>
+       <i class="fa-solid fa-ellipsis"></i>
+       </div>
+       <img class="main-card-image" src=${dog.photoUrl} >
+       <div class="below-image-bar">
+       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
+       <i class="fa-regular fa-comment"></i> 
+       <i class="fa-solid fa-hand-holding-dollar"></i>
+       <i class="fa-solid fa-share-from-square"></i>
+       </div>  
+       <input class="textarea" name="" type="text" placeholder="Comment...">    
+       </div>
+       `;
   adoptCardsDiv.appendChild(dogDiv);
 };
 
-const createAllCards = (data) => {
-  data.map((data) => {
+const createAllCards = (dogData) => {
+  dogData.map((data) => {
     createSingleCard(data);
   });
   addEventListenersToFav(getFavButtons);
 };
-
-const launchCards = async () => {
-  const data = await getData();
-  createAllCards(data);
-};
-launchCards();
-
-// let regularLaunch = true;
-// if (regularLaunch === true) {
-//   launchCards();
-// }
- 
-
 
 /////// FAVORITE / UN-FAVORITE /////////
 
@@ -117,9 +110,7 @@ for (const elm of closeModal) {
 
 ////////// SORTING //////////////
 
-
 const sortButtonAZ = document.getElementsByClassName("fa-arrow-down-a-z");
-
 
 let sortedFrontwards = async () => {
   let data = await getData();
@@ -134,7 +125,6 @@ let sortedFrontwards = async () => {
   });
   return sortedAZ;
 };
-
 
 const launchSortCardsAZ = async () => {
   // need to remove unsorted card
@@ -163,8 +153,7 @@ const launchSortCardsZA = async () => {
   createAllCards(data);
 };
 
-////////////  SORTING EVENT LISTENERS /////////////////        why cant i just add event lister to button its-self
-
+////////////  SORTING EVENT LISTENERS /////////////////
 const addEventListenersSorting = (AZ, ZA) => {
   for (const button of AZ) {
     button.addEventListener("click", () => {
@@ -179,20 +168,10 @@ const addEventListenersSorting = (AZ, ZA) => {
 };
 addEventListenersSorting(sortButtonAZ, sortButtonZA);
 
-
-
 ////// Total Age /////////
+const getNumberBox = document.querySelector(".number");
 
- const totalAge = async () => {
-  const data = await getData(); 
-  const sum = data.map((dog) => dog.age); 
-  const totalSum = sum.reduce((acc,val) => acc + val,0);
-  return totalSum; 
-} 
-const age = totalAge(); age
-// .then(res => res); age
-
-
-const getNumberBox = document.getElementsByClassName('number') 
-
-getNumberBox.innerHTML = age
+function totalAge(dogs) {
+  ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
+  getNumberBox.innerHTML = ageArray;
+}
