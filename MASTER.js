@@ -172,7 +172,6 @@ addEventListenersSorting(sortButtonAZ, sortButtonZA);
 const getNumberBox = document.querySelector(".number");
 
 function totalAge(dogs) {
-  ageArray = dogs.map((dog) => dog.age)
-  .reduce((acc, val) => acc + val);
+  ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
   getNumberBox.innerHTML = ageArray;
 }
