@@ -51,17 +51,19 @@ const adoptCardsDiv = document.getElementById("adoptionCards");
 const getFavButtons = document.getElementsByClassName("addToFav");
 const getRemoveFavButtons = document.getElementsByClassName("removeFav");
 
+const favArray = [];
+
 /////// FAVORITE / UN-FAVORITE /////////     on click need to remove current card from dogData
+
 const addEventListenersToFav = (faveBtns) => {
   for (const button of faveBtns) {
     button.addEventListener("click", (e) => {
       let parent = e.target.parentElement.parentElement.parentElement;
+      favesDiv.append(parent);
       button.classList.remove("fa-heart-circle-plus");
       button.classList.add("fa-heart-crack");
       button.classList.remove("addToFav");
       button.classList.add("removeFav");
-      favesDiv.append(parent);
-      /// remove current dog card here from original dogData
       const cardIndex = dogData.findIndex((element => element._id === parent.id));  
       dogData.splice(cardIndex, 1);    
       addEventListenersToUnFav(getRemoveFavButtons);
@@ -78,9 +80,10 @@ const addEventListenersToUnFav = (removeBtns) => {
       button.classList.add("fa-heart-circle-plus");
       button.classList.remove("removeFav");
       button.classList.add("addToFav");
-
-    // need to add card back to dogCard Array - needs to be an object  
-      dogData.push()
+   
+    // need to add card back to dogCard Array - needs to be an object 
+      dogData.push(parent)
+      dogData.splice(2, 0,)
       console.log(parent);
       console.log(parent.id)
       console.log(dogData);
@@ -88,8 +91,6 @@ const addEventListenersToUnFav = (removeBtns) => {
   }
 };
 
-const favTracker = document.getElementById('favorite');
-// favTracker
 
 ////////// SORTING //////////////  
 
