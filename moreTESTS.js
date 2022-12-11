@@ -1,4 +1,5 @@
-// let dogData; 
+
+let dogData; 
 const getData = async () => {
   dataFetch = await fetch(
     "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
@@ -7,71 +8,66 @@ const getData = async () => {
   dogData = json.data; 
   createAllCards(dogData);
   totalAge(dogData);
-
+   
   };
 getData();
 
-const dogCardArray = [];
+const createSingleCard = (dog) => {
+  dogDiv = document.createElement("div");
+  dogDiv.classList.add('dog');
+  dogDiv.setAttribute('id', dog._id);
+  dogDiv.innerHTML = `      
+       <div class="cardsClass">   
+       <div class=card-header>
+       <img class="card-header-img" src="${dog.photoUrl}">
+       <div class="info-wrapper">  
+       <h2> ${dog.name} </h2> 
+       <div>${dog.breed} - ${dog.age}</div>  
+       </div>
+       <i class="fa-solid fa-ellipsis"></i>
+       </div>
+       <img class="main-card-image" src=${dog.photoUrl} >
+       <div class="below-image-bar">
+       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
+       <i class="fa-regular fa-comment"></i> 
+       <i class="fa-solid fa-hand-holding-dollar"></i>
+       <i class="fa-solid fa-share-from-square"></i>
+       </div>  
+       <input class="textarea" name="" type="text" placeholder="Comment...">    
+       </div>
+       `;
+  adoptCardsDiv.appendChild(dogDiv);
+};
+
+const createAllCards = (dogData) => {
+  dogData.map((data) => {
+    createSingleCard(data);
+  });
+  addEventListenersToFav(getFavButtons);
+};
 
 const favesDiv = document.getElementById("faves");
 const adoptCardsDiv = document.getElementById("adoptionCards");
 const getFavButtons = document.getElementsByClassName("addToFav");
 const getRemoveFavButtons = document.getElementsByClassName("removeFav");
 
-const createAllCards = (dogs) => {
-  dogs.map((dog) => {
-    dogDiv = document.createElement("div");
-    dogDiv.classList.add("dog");
-    dogDiv.innerHTML = `      
-         <div id =${dog._id} class="cardsClass">   
-         <div class=card-header>
-         <img class="card-header-img" src="${dog.photoUrl}">
-         <div class="info-wrapper">  
-         <h2> ${dog.name} </h2> 
-         <div>${dog.breed} - ${dog.age}</div>  
-         </div>
-         <i class="fa-solid fa-ellipsis"></i>
-         </div>
-         <img class="main-card-image" src=${dog.photoUrl} >
-         <div class="below-image-bar">
-         <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
-         <i class="fa-regular fa-comment"></i> 
-         <i class="fa-solid fa-hand-holding-dollar"></i>
-         <i class="fa-solid fa-share-from-square"></i>
-         </div>  
-         <input class="textarea" name="" type="text" placeholder="Comment...">    
-         </div>
-         `; 
-    dogCardArray.push(dogDiv);  
-  }); 
-  displayCards(dogCardArray);     console.log(dogCardArray);                                                                
-};
-
-
-
-const displayCards = (dogCardArray) => {  // try to control sorting here 
-  dogCardArray.map((eachDog)=> {
-    adoptCardsDiv.appendChild(eachDog);
-    addEventListenersToFav(getFavButtons);
-    
-  });
-}
-
-
-
-
-/////// FAVORITE / UN-FAVORITE /////////
+/////// FAVORITE / UN-FAVORITE /////////     on click need to remove current card from dogData
 const addEventListenersToFav = (faveBtns) => {
   for (const button of faveBtns) {
     button.addEventListener("click", (e) => {
       let parent = e.target.parentElement.parentElement.parentElement;
-      button.setAttribute('id', 'favorite');
       button.classList.remove("fa-heart-circle-plus");
       button.classList.add("fa-heart-crack");
       button.classList.remove("addToFav");
       button.classList.add("removeFav");
-      // favesDiv.append(parent);
-      dogCardArray.remove(parent);  /// ERROR HERE - Not removing from arrray 
+      favesDiv.append(parent);
+      /// remove current dog card here from original dogData
+      const cardIndex = dogData.findIndex((element => element._id === parent.id));  
+      dogData.splice(cardIndex, 1); 
+
+      console.log(cardIndex);
+      console.log(dogData);
+     
       addEventListenersToUnFav(getRemoveFavButtons);
     });
   }
@@ -81,12 +77,18 @@ const addEventListenersToUnFav = (removeBtns) => {
   for (const button of removeBtns) {
     button.addEventListener("click", (e) => {
       let parent = e.target.parentElement.parentElement.parentElement;
-      button.setAttribute('id', '');
-      dogCardArray.append(dogDiv);
+      adoptCardsDiv.append(parent);
       button.classList.remove("fa-heart-crack");
       button.classList.add("fa-heart-circle-plus");
       button.classList.remove("removeFav");
       button.classList.add("addToFav");
+
+
+    // need to add card back to dogCard Array - needs to be an object  
+      dogData.push()
+      console.log(parent);
+      console.log(parent.id)
+      console.log(dogData);
     });
   }
 };
@@ -94,7 +96,7 @@ const addEventListenersToUnFav = (removeBtns) => {
 const favTracker = document.getElementById('favorite');
 // favTracker
 
-////////// SORTING //////////////  lets try a filter
+////////// SORTING //////////////  
 
 // when sort is clicked , need to sort the cards living AdoptionDiv & FavDiv
 
@@ -103,7 +105,6 @@ const favTracker = document.getElementById('favorite');
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 
 let sortedFrontwards = (dogs) => {
-  sortButtonAZ.addEventListener("click", () => {
     sortedAZ = dogs.sort((a, b) => {
       if (a.name > b.name) {
         return 1;
@@ -114,19 +115,12 @@ let sortedFrontwards = (dogs) => {
       return 0;
     });
     return sortedAZ;
+  }; 
+  
+  sortButtonAZ.addEventListener("click", () => {
+    sortedFrontwards(dogData);
   });
-};
 
-// const AZ = () => {
-//   sortButtonAZ.addEventListener("click", () => {
-//     sortedFrontwards(dogData);
-//   });
-// };
-
-const sortCardsAZ = (dogs) => {
-  // need to remove unsorted card
-  sortedFrontwards(dogs);
-};
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
