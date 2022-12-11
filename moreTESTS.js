@@ -63,11 +63,7 @@ const addEventListenersToFav = (faveBtns) => {
       favesDiv.append(parent);
       /// remove current dog card here from original dogData
       const cardIndex = dogData.findIndex((element => element._id === parent.id));  
-      dogData.splice(cardIndex, 1); 
-
-      console.log(cardIndex);
-      console.log(dogData);
-     
+      dogData.splice(cardIndex, 1);    
       addEventListenersToUnFav(getRemoveFavButtons);
     });
   }
@@ -82,7 +78,6 @@ const addEventListenersToUnFav = (removeBtns) => {
       button.classList.add("fa-heart-circle-plus");
       button.classList.remove("removeFav");
       button.classList.add("addToFav");
-
 
     // need to add card back to dogCard Array - needs to be an object  
       dogData.push()
