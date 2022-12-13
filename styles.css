@@ -194,8 +194,12 @@ h4 {
   border-radius: 10px;
 }
 
-.addToFav,
-.removeFav,
+.fa-heart-crack {
+  display: none;
+}
+
+.favOn,
+.favOff,
 .fa-regular,
 .fa-share-from-square,
 .fa-hand-holding-dollar {
@@ -207,6 +211,8 @@ h4 {
   color: pink;
   cursor: pointer;
 }
+
+
 .fa-share-from-square,
 .fa-regular {
   color: white;
@@ -218,10 +224,6 @@ h4 {
 
 .fa-hand-holding-dollar {
   color: green;
-}
-
-.is-not-visible {
-  display: none;
 }
 
 .modal-header {
