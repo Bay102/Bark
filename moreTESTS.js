@@ -5,8 +5,8 @@ const getData = async () => {
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData);
-  totalAge(dogData);
+  createAllCards(dogData); 
+  totalAge(dogData); 
 };
 getData();
 
@@ -26,8 +26,8 @@ const createSingleCard = (dog) => {
        </div>
        <img class="main-card-image" src=${dog.photoUrl} >
        <div class="below-image-bar">
-       <i class="favOn fa-sharp fa-solid fa-heart-circle-plus"></i>
-       <i class="favOff fa-sharp fa-solid fa-heart-crack"></i>
+       <i data-fav="${dog._id}" class="favOn  fa-solid fa-heart-circle-plus"></i>
+       <i data-unFav="${dog._id}" class="favOff fa-solid fa-heart-crack"></i>
        <i class="fa-regular fa-comment"></i> 
        <i class="fa-solid fa-hand-holding-dollar"></i>
        <i class="fa-solid fa-share-from-square"></i>
@@ -54,11 +54,12 @@ const getRemoveFavButtons = document.getElementsByClassName("favOff");
 
 const favArray = [];
 
-const addEventListenersToFav = (faveBtns) => {
-  for (const button of faveBtns) {
+
+const addEventListenersToFav = (favoriteButtons) => {
+  for (const button of favoriteButtons) {
     button.addEventListener("click", (e) => {
       const parent = e.target.parentElement.parentElement.parentElement;
-      const brokenHeart = document.querySelector(".fa-heart-crack");
+      const brokenHeart = document.querySelector(".fa-heart-crack"); // console.log(brokenHeart);
       button.style.display = "none";
       brokenHeart.style.display = "block";
       const cardIndex = dogData.findIndex(
@@ -72,17 +73,44 @@ const addEventListenersToFav = (faveBtns) => {
   }
 };
 
-const addEventListenersToUnFav = (removeBtns) => {
-  for (const button of removeBtns) {
+
+const addEventListenersToUnFav = (removeButtons) => {
+  for (const button of removeButtons) {
     button.addEventListener("click", (e) => {
       const parent = e.target.parentElement.parentElement.parentElement;
-      const heartBut = document.querySelector(".fa-heart-circle-plus");
-      button.style.display = "none";
-      heartBut.style.display = "block";
+      const itemId = parent.id; console.log(itemId);
+      const unFavBtn = document.querySelectorAll(`[data-unFav]`);  console.log(unFavBtn);
+      const favBtn = document.querySelectorAll(`[data-fav]`); console.log(favBtn);
+      unFavBtn.forEach((val) => {
+      if (val.dataset.unFav == itemId) {
+          val.style.display = 'none'; 
+           console.log('disabled');
+        }
+      });
+
+      
+      favBtn.forEach((val) => {
+        if (val.dataset.fav == itemId) {
+          val.style.display = 'block';
+        }
+      });
+
+      // button.style.display = "none";
+
+      // const heartBut = document.getElementById(); console.log(heartBut);
+      // heartBut.style.display = "block";
+
+      // const findButtonId = (array) => {
+      //   return array.map((button) => button.createdAt);  
+      // }; 
+    
+      // const buttonID = findButtonId(favArray); console.log(buttonID);
+        
       const favIndex = favArray.findIndex(
         (element) => element._id === parent.id
       );
       const currentDog = favArray[favIndex];
+      
       adoptCardsDiv.append(parent);
       favArray.splice(favIndex, 1);
       dogData.push(currentDog);
