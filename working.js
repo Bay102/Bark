@@ -6,7 +6,7 @@ const getData = async () => {
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData);
-  totalAge(dogData);
+  //   totalAge(dogData);
 };
 getData();
 
@@ -26,7 +26,7 @@ const createSingleCard = (dog) => {
        </div>
        <img class="main-card-image" src=${dog.photoUrl} >
        <div class="below-image-bar">
-       <i data-fav="${dog._id}" class="fa-solid fa-heart-circle-plus"></i>
+       <i id="${dog._id}" class="fa-solid fa-heart-circle-plus"></i>
        <i class="fa-regular fa-comment"></i> 
        <i class="fa-solid fa-hand-holding-dollar"></i>
        <i class="fa-solid fa-share-from-square"></i>
@@ -34,64 +34,51 @@ const createSingleCard = (dog) => {
        <input class="textarea" name="" type="text" placeholder="Comment...">    
        </div>
        `;
-  adoptCardsDiv.appendChild(dogDiv);
+  main.appendChild(dogDiv);
 };
 
-const createAllCards = (dogData) => { // try turnery here for sorting 
+const createAllCards = (dogData) => {
+  // try turnery here for sorting
   dogData.map((data) => {
-   createSingleCard(data);
-
-  });
-  // addEventListenersToFav(getFavButtons);
+    createSingleCard(data);
+  });  
+  moveCard();
 };
+
 
 /////// FAVORITE / UN-FAVORITE /////////
 
-const favesDiv = document.getElementById("faves");
-const adoptCardsDiv = document.getElementById("adoptionCards");
-const getFavButtons = document.getElementsByClassName("fa-heart-circle-plus");
 
-const favArray = [];
+const main = document.getElementById("main");
+const favs = document.getElementById("favs");
 
+const moveCard = () => {
+  const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
+  favButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const direction =
+        button.parentElement.parentElement.parentElement.parentElement.id ===
+        "main"
+          ? "toFavs"
+          : "toMain";  
+      button.classList.remove('fa-heart-circle-plus');
+      button.classList.add("fa-heart-crack")
+      updateCollections(button.id, direction);
+    });
+  });
+};
 
-
-// const addEventListenersToFav = (favoriteButtons) => {
-//    for (const button of favoriteButtons) {
-//     button.addEventListener("click", (e) => {
-//       button.setAttribute("class", "fa-solid fa-heart-crack");
-//       const parent = e.target.parentElement.parentElement.parentElement;
-//       const itemId = parent.id; 
-
-//       const findCardIndex = dogData.findIndex((element) => element._id === parent.id );
-//       const currentDog = dogData[findCardIndex];
-
-//       dogData.splice(findCardIndex, 1);
-//       favArray.push(currentDog);
-//       favesDiv.append(parent);  // try pushing parent into a new card instead //first event listener is never removed 
-//       console.log('fav');
-      
-//       unFav(button);     
-//     });
-//   }      
-// };
-
-// const unFav = (button) => {
-//   button.addEventListener("click", (e) => {
-//     const parent = e.target.parentElement.parentElement.parentElement;
-//      buttonParent = e.target; console.log(buttonParent);
-//     if (button.dataset.fav === parent.id) {
-//       button.setAttribute("class", "fa-solid fa-heart-circle-plus");
-//       console.log("UnFav Working");
-//     }
-//     const findCardIndex = favArray.findIndex((element) => element._id === parent.id);
-
-//     const currentDog = favArray[findCardIndex];
-//     favArray.splice(findCardIndex, 1);
-//     dogData.push(currentDog);
-//     adoptCardsDiv.append(parent);
-//   });
-// };
-
+const updateCollections = (id, direction) => {
+  let element;
+  const params = direction === "toFavs" ? [main, favs] : [favs, main];
+  Object.values(params[0].children).map((item) => {
+    if (item.id === id) {
+      element = item; 
+      item.remove();
+      params[1].appendChild(element);
+    }
+  });
+};
 
 
 ////////// SORTING //////////////
@@ -118,7 +105,7 @@ const sortedFrontwards = (dogs) => {
 };
 
 sortButtonAZ.addEventListener("click", () => {
-  sortedFrontwards(dogData);
+ 
 });
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
@@ -176,6 +163,4 @@ for (const elm of closeFavorites) {
   });
 }
 
-// setTimeout(() => {
-//   console.log(dogData);
-// }, 4000);
+

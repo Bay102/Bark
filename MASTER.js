@@ -6,7 +6,7 @@ const getData = async () => {
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData);
-  totalAge(dogData);
+  //   totalAge(dogData);
 };
 getData();
 
@@ -26,8 +26,7 @@ const createSingleCard = (dog) => {
        </div>
        <img class="main-card-image" src=${dog.photoUrl} >
        <div class="below-image-bar">
-       <i class="favOn fa-sharp fa-solid fa-heart-circle-plus"></i>
-       <i class="favOff fa-sharp fa-solid fa-heart-crack"></i>
+       <i id="${dog._id}" class="fa-solid fa-heart-circle-plus"></i>
        <i class="fa-regular fa-comment"></i> 
        <i class="fa-solid fa-hand-holding-dollar"></i>
        <i class="fa-solid fa-share-from-square"></i>
@@ -35,60 +34,52 @@ const createSingleCard = (dog) => {
        <input class="textarea" name="" type="text" placeholder="Comment...">    
        </div>
        `;
-  adoptCardsDiv.appendChild(dogDiv);
+  main.appendChild(dogDiv);
 };
 
 const createAllCards = (dogData) => {
+  // try turnery here for sorting
   dogData.map((data) => {
     createSingleCard(data);
+  });  
+  moveCard();
+};
+
+
+/////// FAVORITE / UN-FAVORITE /////////
+
+
+const main = document.getElementById("main");
+const favs = document.getElementById("favs");
+
+const moveCard = () => {
+  const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
+  favButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const direction =
+        button.parentElement.parentElement.parentElement.parentElement.id ===
+        "main"
+          ? "toFavs"
+          : "toMain";  
+      button.classList.remove('fa-heart-circle-plus');
+      button.classList.add("fa-heart-crack")
+      updateCollections(button.id, direction);
+    });
   });
-  addEventListenersToFav(getFavButtons);
-  addEventListenersToUnFav(getRemoveFavButtons);
 };
 
-/////// FAVORITE / UN-FAVORITE /////////     on click need to remove current card from dogData
-const favesDiv = document.getElementById("faves");
-const adoptCardsDiv = document.getElementById("adoptionCards");
-const getFavButtons = document.getElementsByClassName("favOn");
-const getRemoveFavButtons = document.getElementsByClassName("favOff");
-
-const favArray = [];
-
-const addEventListenersToFav = (favoriteButtons) => {
-  for (const button of favoriteButtons) {
-    button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement;
-      const brokenHeart = document.querySelector(".fa-heart-crack");
-      button.style.display = "none";
-      brokenHeart.style.display = "block";
-      const cardIndex = dogData.findIndex(
-        (element) => element._id === parent.id
-      );
-      const currentDog = dogData[cardIndex];
-      favArray.push(currentDog);
-      dogData.splice(cardIndex, 1);
-      favesDiv.append(parent);
-    });
-  }
+const updateCollections = (id, direction) => {
+  let element;
+  const params = direction === "toFavs" ? [main, favs] : [favs, main];
+  Object.values(params[0].children).map((item) => {
+    if (item.id === id) {
+      element = item; 
+      item.remove();
+      params[1].appendChild(element);
+    }
+  });
 };
 
-const addEventListenersToUnFav = (removeButtons) => {
-  for (const button of removeButtons) {
-    button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement;
-      const heartBut = document.querySelector(".fa-heart-circle-plus");
-      button.style.display = "none";
-      heartBut.style.display = "block";
-      const favIndex = favArray.findIndex(
-        (element) => element._id === parent.id
-      );
-      const currentDog = favArray[favIndex];
-      adoptCardsDiv.append(parent);
-      favArray.splice(favIndex, 1);
-      dogData.push(currentDog);
-    });
-  }
-};
 
 ////////// SORTING //////////////
 
@@ -96,9 +87,11 @@ const addEventListenersToUnFav = (removeButtons) => {
 
 // need to grab and track the adoptionCardsDiv & favsDiv separately and sort only those cards
 
+// maybe use an if statement in the creating all cards function,
+
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 
-let sortedFrontwards = (dogs) => {
+const sortedFrontwards = (dogs) => {
   sortedAZ = dogs.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
@@ -112,7 +105,7 @@ let sortedFrontwards = (dogs) => {
 };
 
 sortButtonAZ.addEventListener("click", () => {
-  sortedFrontwards(dogData);
+ 
 });
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
@@ -136,21 +129,6 @@ const launchSortCardsZA = async () => {
   createAllCards(data);
 };
 
-//////////  SORTING EVENT LISTENERS /////////////////
-// const addEventListenersSorting = (AZ, ZA) => {
-//   for (const button of AZ) {
-//     button.addEventListener("click", () => {
-//       sortedFrontwards(dogs)
-//     });
-//   }
-// //   for (const button of ZA) {
-// //     button.addEventListener("click", () => {
-// //       launchSortCardsZA();
-// //     });
-// //   }
-// };
-// addEventListenersSorting(sortButtonAZ, sortButtonZA);
-
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
 
@@ -164,13 +142,13 @@ const modalClose = "[data-close]";
 const isVisible = "is-visible";
 
 // this will store any element that has "[data-open]" in a node list
-const openModal = document.querySelectorAll(modalOpen);
+const openFavorites = document.querySelectorAll(modalOpen);
 
 // this will store any element that has "[data-close]" in a node list
-const closeModal = document.querySelectorAll(modalClose);
+const closeFavorites = document.querySelectorAll(modalClose);
 
 // for of loop to iterate through node list of queried elements and adding eventlistener to each one
-for (const elm of openModal) {
+for (const elm of openFavorites) {
   // open Modal buttons
   elm.addEventListener("click", function () {
     const modalId = this.dataset.open; // "this" is referring to the parent Element
@@ -178,13 +156,9 @@ for (const elm of openModal) {
   });
 }
 
-for (const elm of closeModal) {
+for (const elm of closeFavorites) {
   // close modal buttons
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.parentElement.classList.remove(isVisible);
   });
 }
-
-// setTimeout(() => {
-//   console.log(dogData);
-// }, 4000);
