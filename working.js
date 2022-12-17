@@ -5,7 +5,8 @@ const getData = async () => {
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData);
+  createAllCards(dogData); 
+  moveCard();
   //   totalAge(dogData);
 };
 getData();
@@ -41,16 +42,16 @@ const createAllCards = (dogData) => {
   // try turnery here for sorting
   dogData.map((data) => {
     createSingleCard(data);
-  });  
-  moveCard();
+  });
+sort();
 };
-
 
 /////// FAVORITE / UN-FAVORITE /////////
 
-
 const main = document.getElementById("main");
 const favs = document.getElementById("favs");
+
+let favArray = [];
 
 const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
@@ -60,25 +61,41 @@ const moveCard = () => {
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
           ? "toFavs"
-          : "toMain";  
-      button.classList.remove('fa-heart-circle-plus');
-      button.classList.add("fa-heart-crack")
+          : "toMain";
+      favButtonSwap(direction, button);
+      dogDataSplice(dogData); 
       updateCollections(button.id, direction);
+       const findCardIndex = dogData.findIndex((element) => element._id === parent.id ); console.log(findCardIndex);
+    const currentDog = dogData[findCardIndex]; console.log(currentDog);
+    favArray.push(currentDog);
+    dogData.splice(findCardIndex, 1); console.log(dogData);
     });
   });
 };
 
 const updateCollections = (id, direction) => {
-  let element;
   const params = direction === "toFavs" ? [main, favs] : [favs, main];
   Object.values(params[0].children).map((item) => {
     if (item.id === id) {
-      element = item; 
+      element = item;
       item.remove();
       params[1].appendChild(element);
     }
   });
 };
+
+const favButtonSwap = (direction, button) => {
+  if (direction === "toFavs") {
+    button.classList.remove("fa-heart-circle-plus");
+    button.classList.add("fa-heart-crack");
+  } else {
+    button.classList.add("fa-heart-circle-plus");
+  }
+};
+
+const dogDataSplice = (dogData) => {
+
+}
 
 
 ////////// SORTING //////////////
@@ -104,9 +121,13 @@ const sortedFrontwards = (dogs) => {
   return sortedAZ;
 };
 
-sortButtonAZ.addEventListener("click", () => {
- 
+
+const sort = () => {
+  sortButtonAZ.addEventListener("click", () => {
+return console.log(sortedFrontwards(dogData)); 
 });
+}
+
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
@@ -162,5 +183,3 @@ for (const elm of closeFavorites) {
     this.parentElement.parentElement.parentElement.classList.remove(isVisible);
   });
 }
-
-

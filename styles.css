@@ -86,7 +86,8 @@ h4 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: 5px;
+  border: 2px solid white;
   width: 500px;
   height: fit-content;
   text-align: center;

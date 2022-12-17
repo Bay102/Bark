@@ -55,25 +55,25 @@ const favArray = [];
 
 
 
-// const addEventListenersToFav = (favoriteButtons) => {
-//    for (const button of favoriteButtons) {
-//     button.addEventListener("click", (e) => {
-//       button.setAttribute("class", "fa-solid fa-heart-crack");
-//       const parent = e.target.parentElement.parentElement.parentElement;
-//       const itemId = parent.id; 
+const addEventListenersToFav = (favoriteButtons) => {
+   for (const button of favoriteButtons) {
+    button.addEventListener("click", (e) => {
+      button.setAttribute("class", "fa-solid fa-heart-crack");
+      const parent = e.target.parentElement.parentElement.parentElement;
+      const itemId = parent.id; 
 
-//       const findCardIndex = dogData.findIndex((element) => element._id === parent.id );
-//       const currentDog = dogData[findCardIndex];
+      const findCardIndex = dogData.findIndex((element) => element._id === parent.id );
+      const currentDog = dogData[findCardIndex];
 
-//       dogData.splice(findCardIndex, 1);
-//       favArray.push(currentDog);
-//       favesDiv.append(parent);  // try pushing parent into a new card instead //first event listener is never removed 
-//       console.log('fav');
+      dogData.splice(findCardIndex, 1);
+      favArray.push(currentDog);
+      favesDiv.append(parent);  // try pushing parent into a new card instead //first event listener is never removed 
+      console.log('fav');
       
-//       unFav(button);     
-//     });
-//   }      
-// };
+      unFav(button);     
+    });
+  }      
+};
 
 // const unFav = (button) => {
 //   button.addEventListener("click", (e) => {

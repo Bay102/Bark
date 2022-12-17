@@ -41,13 +41,11 @@ const createAllCards = (dogData) => {
   // try turnery here for sorting
   dogData.map((data) => {
     createSingleCard(data);
-  });  
+  });
   moveCard();
 };
 
-
 /////// FAVORITE / UN-FAVORITE /////////
-
 
 const main = document.getElementById("main");
 const favs = document.getElementById("favs");
@@ -60,27 +58,34 @@ const moveCard = () => {
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
           ? "toFavs"
-          : "toMain";  
-      button.classList.remove('fa-heart-circle-plus');
-      button.classList.add("fa-heart-crack")
+          : "toMain";
+      favButtonSwap(direction, button);
       updateCollections(button.id, direction);
     });
   });
 };
 
 const updateCollections = (id, direction) => {
-  let element;
   const params = direction === "toFavs" ? [main, favs] : [favs, main];
   Object.values(params[0].children).map((item) => {
     if (item.id === id) {
-      element = item; 
+      element = item;
       item.remove();
       params[1].appendChild(element);
+      dogData.splice(id);
+      console.log();
     }
   });
 };
 
-
+const favButtonSwap = (direction, button) => {
+  if (direction === "toFavs") {
+    button.classList.remove("fa-heart-circle-plus");
+    button.classList.add("fa-heart-crack");
+  } else {
+    button.classList.add("fa-heart-circle-plus");
+  }
+};
 ////////// SORTING //////////////
 
 // when sort is clicked , need to sort the cards living AdoptionDiv & FavDiv
@@ -105,7 +110,7 @@ const sortedFrontwards = (dogs) => {
 };
 
 sortButtonAZ.addEventListener("click", () => {
- 
+  // remove main container
 });
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
