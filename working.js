@@ -1,11 +1,11 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=5&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=15&page=11"
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData); 
+  createAllCards(dogData);
   moveCard();
   //   totalAge(dogData);
 };
@@ -43,7 +43,8 @@ const createAllCards = (dogData) => {
   dogData.map((data) => {
     createSingleCard(data);
   });
-sort();
+  // dogDataSplice(dogData);
+  sort();
 };
 
 /////// FAVORITE / UN-FAVORITE /////////
@@ -56,25 +57,23 @@ let favArray = [];
 const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
   favButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (e) => {
+      const parent = e.target.parentElement.parentElement.parentElement;
       const direction =
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
-          ? "toFavs"
+          ? "toFaves"
           : "toMain";
-      favButtonSwap(direction, button);
-      dogDataSplice(dogData); 
+      console.log(direction);
       updateCollections(button.id, direction);
-       const findCardIndex = dogData.findIndex((element) => element._id === parent.id ); console.log(findCardIndex);
-    const currentDog = dogData[findCardIndex]; console.log(currentDog);
-    favArray.push(currentDog);
-    dogData.splice(findCardIndex, 1); console.log(dogData);
+      updateArrays(parent,direction);
+      favButtonSwap(direction, button);
     });
   });
 };
 
 const updateCollections = (id, direction) => {
-  const params = direction === "toFavs" ? [main, favs] : [favs, main];
+  const params = direction === "toFaves" ? [main, favs] : [favs, main];
   Object.values(params[0].children).map((item) => {
     if (item.id === id) {
       element = item;
@@ -85,7 +84,7 @@ const updateCollections = (id, direction) => {
 };
 
 const favButtonSwap = (direction, button) => {
-  if (direction === "toFavs") {
+  if (direction === "toFaves") {
     button.classList.remove("fa-heart-circle-plus");
     button.classList.add("fa-heart-crack");
   } else {
@@ -93,9 +92,27 @@ const favButtonSwap = (direction, button) => {
   }
 };
 
-const dogDataSplice = (dogData) => {
+const updateArrays = (parent, direction) => {
+  if (direction === "toFaves") {
+    const findCardIndex = dogData.findIndex(
+      (element) => element._id === parent.id
+    );
+    const currentDog = dogData[findCardIndex];
+    favArray.push(currentDog);
+    dogData.splice(findCardIndex, 1);
+  } else if (direction === "toMain") {
+    const findCardIndex = favArray.findIndex(
+      (element) => element._id === parent.id
+    );
+    const currentDog = favArray[findCardIndex];
+    favArray.splice(findCardIndex, 1);
+    dogData.push(currentDog);
+  }
 
-}
+  console.log(dogData);
+  console.log(favArray);
+};
+
 
 
 ////////// SORTING //////////////
@@ -121,13 +138,11 @@ const sortedFrontwards = (dogs) => {
   return sortedAZ;
 };
 
-
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
-return console.log(sortedFrontwards(dogData)); 
-});
-}
-
+    return sortedFrontwards(dogData);
+  });
+};
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
