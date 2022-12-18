@@ -47,6 +47,8 @@ const createAllCards = (dogData) => {
 };
 
 console.log('hello World Branch Test');
+console.log('hello World Branch Test');
+console.log('hello World Branch Test');
 
 /////// FAVORITE / UN-FAVORITE /////////
 
