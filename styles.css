@@ -21,9 +21,7 @@ h4 {
 }
 
 .site-header {
-   background-color: black;
-  /* background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images"); */
-  /* background-size: cover; */
+  background-color: black;
   width: 500px;
   margin: -10px auto 1px auto;
   height: 120px;
@@ -38,7 +36,6 @@ h4 {
 .navbar {
   display: flex;
   flex-flow: row nowrap;
-
   width: 100%;
   height: inherit;
   align-items: center;

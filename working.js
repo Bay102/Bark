@@ -46,6 +46,8 @@ const createAllCards = (dogData) => {
   sort(); 
 };
 
+console.log('hello World Branch Test');
+
 /////// FAVORITE / UN-FAVORITE /////////
 
 const main = document.getElementById("main");
@@ -139,7 +141,7 @@ const sort = () => {
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
-const sortedBackwards = async () => {
+const sortedBackwards = () => {
   let data = dogs;
   sortedZA = data.sort((a, b) => {
     if (b.name > a.name) {
@@ -153,8 +155,8 @@ const sortedBackwards = async () => {
   return sortedZA;
 };
 
-const launchSortCardsZA = async () => {
-  const data = await sortedBackwards();
+const launchSortCardsZA = () => {
+  const data = sortedBackwards();
   createAllCards(data);
 };
 
