@@ -1,7 +1,7 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=10&page=11"
   );
   const json = await dataFetch.json();
   dogData = json.data;
@@ -46,14 +46,11 @@ const createAllCards = (dogData) => {
   sort(); 
 };
 
-console.log('hello World Branch Test');
-console.log('hello World Branch Test');
-console.log('hello World Branch Test');
 
 /////// FAVORITE / UN-FAVORITE /////////
 
 const main = document.getElementById("main");
-const favs = document.getElementById("favs");
+const faves = document.getElementById("faves");
 
 let favArray = [];
 
@@ -75,7 +72,7 @@ const moveCard = () => {
 };
 
 const updateCollections = (id, direction) => {
-  const params = direction === "toFaves" ? [main, favs] : [favs, main];
+  const params = direction === "toFaves" ? [main, faves] : [faves, main];
   Object.values(params[0].children).map((item) => {
     if (item.id === id) {
       element = item;
@@ -110,8 +107,6 @@ const updateArrays = (parent, direction) => {
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
   }
-  console.log(dogData);
-  console.log(favArray);
 };
 
 
@@ -119,6 +114,8 @@ const updateArrays = (parent, direction) => {
 ////////// SORTING //////////////
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
+
+const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 
 const sortedFrontwards = (dogs) => {
   sortedAZ = dogs.sort((a, b) => {
@@ -133,17 +130,7 @@ const sortedFrontwards = (dogs) => {
   return sortedAZ;
 };
 
-const sort = () => {
-  sortButtonAZ.addEventListener("click", () => {
-    // return sortedFrontwards(dogData);
-    createAllCards(sortedFrontwards(dogData))
-    // console.log(sortedFrontwards(dogData));
-  });
-};
-
-const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
-
-const sortedBackwards = () => {
+const sortedBackwards = (dogs) => {
   let data = dogs;
   sortedZA = data.sort((a, b) => {
     if (b.name > a.name) {
@@ -157,10 +144,16 @@ const sortedBackwards = () => {
   return sortedZA;
 };
 
-const launchSortCardsZA = () => {
-  const data = sortedBackwards();
-  createAllCards(data);
+const sort = () => {
+  sortButtonAZ.addEventListener("click", () => {
+    // return sortedFrontwards(dogData);
+    console.log(sortedFrontwards(dogData));
+  });
+  sortButtonZA.addEventListener("click", () => {
+     console.log(sortedBackwards(favArray));
+  })
 };
+
 
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");

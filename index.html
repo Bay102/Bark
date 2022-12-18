@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <script src="https://kit.fontawesome.com/67890cb4aa.js" crossorigin="anonymous"></script>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="/styles.css">
-   <link rel="stylesheet" href="/responsive.css">
-   <title>BARK!</title>
-</head>
-<body>
-<!-- DOG CARDS -->
-      <div class="site-header">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <script
+      src="https://kit.fontawesome.com/67890cb4aa.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/responsive.css" />
+    <title>BARK!</title>
+  </head>
+  <body>
+    <!-- DOG CARDS -->
+    <div class="site-header">
       <nav class="navbar">
-        <h4 class="nav-text"> 
+        <h4 class="nav-text">
           <i class="fa-solid fa-paw"></i>
           BARK!
         </h4>
@@ -23,44 +26,30 @@
             <li class="nav-item">
               <i class="fa-solid fa-arrow-down-a-z"></i>
             </li>
-            <li class="nav-item" >
+            <li class="nav-item">
               <i class="fa-solid fa-arrow-up-z-a"></i>
             </li>
-            <li class="nav-item" >DONATE</li>
-           
+            <li class="nav-item">DONATE</li>
           </ul>
         </div>
       </nav>
     </div>
- <div class="number"></div>
-<!-- ADOPTION CARDS -->
- <div id="main"></div>
+    <div class="number"></div>
+    <!-- ADOPTION CARDS -->
+    <div id="main"></div>
 
+    <!-- FAVE MODAL  -->
+    <div id="favorites" class="full-site-modal" data-animation="zoomInOut">
+      <header class="modal-header">
+        <h3>Following</h3>
+        <i class="fas fa-times" data-close></i>
+      </header>
+      <div class="faves-header"></div>
+      <div id="faves"></div>
+    </div>
 
-
-
-
-<!-- FAVE MODAL  -->
-<div id="favorites" class="full-site-modal" data-animation="zoomInOut">
- 
-    <header class="modal-header">
-    <h3>Following</h3>
-    <i class="fas fa-times" data-close></i>
-  </header>
-  <div class="favs-header"></div>  
-   <div id="favs"></div>  
-    
-</div>
-  
-
-   <!-- <script src="/MASTER.js"></script> -->
-   <!-- <script src="/TESTS.js"></script> -->
-   <script src="/working.js"></script>
-</body>
+    <!-- <script src="/MASTER.js"></script> -->
+    <!-- <script src="/TESTS.js"></script> -->
+    <script src="/working.js"></script>
+  </body>
 </html>
-
-
-
-
-
-
