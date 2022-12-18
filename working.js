@@ -1,16 +1,15 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=15&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
   );
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData);
-  moveCard();
   //   totalAge(dogData);
 };
 getData();
-
+  
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -43,8 +42,8 @@ const createAllCards = (dogData) => {
   dogData.map((data) => {
     createSingleCard(data);
   });
-  // dogDataSplice(dogData);
-  sort();
+  moveCard();
+  sort(); 
 };
 
 /////// FAVORITE / UN-FAVORITE /////////
@@ -64,7 +63,6 @@ const moveCard = () => {
         "main"
           ? "toFaves"
           : "toMain";
-      console.log(direction);
       updateCollections(button.id, direction);
       updateArrays(parent,direction);
       favButtonSwap(direction, button);
@@ -108,7 +106,6 @@ const updateArrays = (parent, direction) => {
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
   }
-
   console.log(dogData);
   console.log(favArray);
 };
@@ -116,12 +113,6 @@ const updateArrays = (parent, direction) => {
 
 
 ////////// SORTING //////////////
-
-// when sort is clicked , need to sort the cards living AdoptionDiv & FavDiv
-
-// need to grab and track the adoptionCardsDiv & favsDiv separately and sort only those cards
-
-// maybe use an if statement in the creating all cards function,
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 
@@ -140,7 +131,9 @@ const sortedFrontwards = (dogs) => {
 
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
-    return sortedFrontwards(dogData);
+    // return sortedFrontwards(dogData);
+    createAllCards(sortedFrontwards(dogData))
+    // console.log(sortedFrontwards(dogData));
   });
 };
 
@@ -195,6 +188,6 @@ for (const elm of openFavorites) {
 for (const elm of closeFavorites) {
   // close modal buttons
   elm.addEventListener("click", function () {
-    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+    this.parentElement.parentElement.classList.remove(isVisible);
   });
 }

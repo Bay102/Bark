@@ -1,22 +1,20 @@
-let dogs;
-let age;
-
+let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=30&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=15&page=11"
   );
   const json = await dataFetch.json();
-  dogs = json.data;
-  createAllCards(dogs);
-  totalAge(dogs);
+  dogData = json.data;
+  createAllCards(dogData);
+  moveCard();
+  //   totalAge(dogData);
 };
 getData();
 
-const favesDiv = document.getElementById("faves");
-const adoptCardsDiv = document.getElementById("adoptionCards");
-
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
+  dogDiv.classList.add("dog");
+  dogDiv.setAttribute("id", dog._id);
   dogDiv.innerHTML = `      
        <div class="cardsClass">   
        <div class=card-header>
@@ -29,7 +27,7 @@ const createSingleCard = (dog) => {
        </div>
        <img class="main-card-image" src=${dog.photoUrl} >
        <div class="below-image-bar">
-       <i class="addToFav fa-sharp fa-solid fa-heart-circle-plus"></i>
+       <i id="${dog._id}" class="fa-solid fa-heart-circle-plus"></i>
        <i class="fa-regular fa-comment"></i> 
        <i class="fa-solid fa-hand-holding-dollar"></i>
        <i class="fa-solid fa-share-from-square"></i>
@@ -37,84 +35,97 @@ const createSingleCard = (dog) => {
        <input class="textarea" name="" type="text" placeholder="Comment...">    
        </div>
        `;
-  adoptCardsDiv.appendChild(dogDiv);
+  main.appendChild(dogDiv);
 };
 
 const createAllCards = (dogData) => {
+  // try turnery here for sorting
   dogData.map((data) => {
     createSingleCard(data);
   });
-  addEventListenersToFav(getFavButtons);
+  sort();
 };
 
 /////// FAVORITE / UN-FAVORITE /////////
 
-const getFavButtons = document.getElementsByClassName("addToFav");
+const main = document.getElementById("main");
+const favs = document.getElementById("favs");
 
-const addEventListenersToFav = (faveBtns) => {
-  for (const button of faveBtns) {
+let favArray = [];
+
+const moveCard = () => {
+  const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
+  favButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      let parent = e.target.parentElement.parentElement.parentElement;
-      button.classList.add("fa-heart-crack");
-      button.classList.remove("fa-heart-circle-plus");
-      button.classList.remove("addToFav");
-      button.classList.add("removeFav");
-      favesDiv.append(parent);
-      addEventListenersToUnFav(getRemoveFavButtons);
+      const parent = e.target.parentElement.parentElement.parentElement;
+      const direction =
+        button.parentElement.parentElement.parentElement.parentElement.id ===
+        "main"
+          ? "toFaves"
+          : "toMain";
+      console.log(direction);
+      updateCollections(button.id, direction);
+      updateArrays(parent,direction);
+      favButtonSwap(direction, button);
     });
+  });
+};
+
+const updateCollections = (id, direction) => {
+  const params = direction === "toFaves" ? [main, favs] : [favs, main];
+  Object.values(params[0].children).map((item) => {
+    if (item.id === id) {
+      element = item;
+      item.remove();
+      params[1].appendChild(element);
+    }
+  });
+};
+
+const favButtonSwap = (direction, button) => {
+  if (direction === "toFaves") {
+    button.classList.remove("fa-heart-circle-plus");
+    button.classList.add("fa-heart-crack");
+  } else {
+    button.classList.add("fa-heart-circle-plus");
   }
 };
 
-const getRemoveFavButtons = document.getElementsByClassName("removeFav");
-
-const addEventListenersToUnFav = (removeBtns) => {
-  for (const button of removeBtns) {
-    button.addEventListener("click", (e) => {
-      let parent = e.target.parentElement.parentElement.parentElement;
-      adoptCardsDiv.append(parent);
-      button.classList.remove("fa-heart-crack");
-      button.classList.add("fa-heart-circle-plus");
-      button.classList.remove("removeFav");
-      button.classList.add("addToFav");
-    });
+const updateArrays = (parent, direction) => {
+  if (direction === "toFaves") {
+    const findCardIndex = dogData.findIndex(
+      (element) => element._id === parent.id
+    );
+    const currentDog = dogData[findCardIndex];
+    favArray.push(currentDog);
+    dogData.splice(findCardIndex, 1);
+  } else if (direction === "toMain") {
+    const findCardIndex = favArray.findIndex(
+      (element) => element._id === parent.id
+    );
+    const currentDog = favArray[findCardIndex];
+    favArray.splice(findCardIndex, 1);
+    dogData.push(currentDog);
   }
+
+  console.log(dogData);
+  console.log(favArray);
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////
 
-const modalOpen = "[data-open]";
-const modalClose = "[data-close]";
-const isVisible = "is-visible";
-
-// this will store any element that has "[data-open]" in a node list
-const openModal = document.querySelectorAll(modalOpen);
-
-// this will store any element that has "[data-close]" in a node list
-const closeModal = document.querySelectorAll(modalClose);
-
-// for of loop to iterate through node list of queried elements and adding eventlistener to each one
-for (const elm of openModal) {
-  // open Modal buttons
-  elm.addEventListener("click", function () {
-    const modalId = this.dataset.open; // "this" is referring to the parent Element
-    document.getElementById(modalId).classList.add(isVisible);
-  });
-}
-
-for (const elm of closeModal) {
-  // close modal buttons
-  elm.addEventListener("click", function () {
-    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
-  });
-}
 
 ////////// SORTING //////////////
 
-const sortButtonAZ = document.getElementsByClassName("fa-arrow-down-a-z");
+// when sort is clicked , need to sort the cards living AdoptionDiv & FavDiv
 
-let sortedFrontwards = async () => {
-  let data = await getData();
-  sortedAZ = data.sort((a, b) => {
+// need to grab and track the adoptionCardsDiv & favsDiv separately and sort only those cards
+
+// maybe use an if statement in the creating all cards function,
+
+const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
+
+const sortedFrontwards = (dogs) => {
+  sortedAZ = dogs.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -126,16 +137,16 @@ let sortedFrontwards = async () => {
   return sortedAZ;
 };
 
-const launchSortCardsAZ = async () => {
-  // need to remove unsorted card
-  const data = await sortedFrontwards();
-  createAllCards(data);
+const sort = () => {
+  sortButtonAZ.addEventListener("click", () => {
+    return sortedFrontwards(dogData);
+  });
 };
 
 const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
 
 const sortedBackwards = async () => {
-  let data = await getData();
+  let data = dogs;
   sortedZA = data.sort((a, b) => {
     if (b.name > a.name) {
       return 1;
@@ -153,25 +164,36 @@ const launchSortCardsZA = async () => {
   createAllCards(data);
 };
 
-////////////  SORTING EVENT LISTENERS /////////////////
-const addEventListenersSorting = (AZ, ZA) => {
-  for (const button of AZ) {
-    button.addEventListener("click", () => {
-      launchSortCardsAZ();
-    });
-  }
-  for (const button of ZA) {
-    button.addEventListener("click", () => {
-      launchSortCardsZA();
-    });
-  }
-};
-addEventListenersSorting(sortButtonAZ, sortButtonZA);
-
 ////// Total Age /////////
-const getNumberBox = document.querySelector(".number");
+const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
   ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
-  getNumberBox.innerHTML = ageArray;
+  getNumberDiv.innerHTML = ageArray;
+}
+
+const modalOpen = "[data-open]";
+const modalClose = "[data-close]";
+const isVisible = "is-visible";
+
+// this will store any element that has "[data-open]" in a node list
+const openFavorites = document.querySelectorAll(modalOpen);
+
+// this will store any element that has "[data-close]" in a node list
+const closeFavorites = document.querySelectorAll(modalClose);
+
+// for of loop to iterate through node list of queried elements and adding eventlistener to each one
+for (const elm of openFavorites) {
+  // open Modal buttons
+  elm.addEventListener("click", function () {
+    const modalId = this.dataset.open; // "this" is referring to the parent Element
+    document.getElementById(modalId).classList.add(isVisible);
+  });
+}
+
+for (const elm of closeFavorites) {
+  // close modal buttons
+  elm.addEventListener("click", function () {
+    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+  });
 }
