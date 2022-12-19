@@ -1,16 +1,17 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=15&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=10&page=11"
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData);
+  createAllCards(dogData); 
   moveCard();
-  //   totalAge(dogData);
+  sort(); 
+//   totalAge(dogData);
 };
 getData();
-
+  
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -40,16 +41,16 @@ const createSingleCard = (dog) => {
 
 const createAllCards = (dogData) => {
   // try turnery here for sorting
-  dogData.map((data) => {
-    createSingleCard(data);
+  dogData.map((eachDog) => {
+    createSingleCard(eachDog);
   });
-  sort();
 };
+
 
 /////// FAVORITE / UN-FAVORITE /////////
 
 const main = document.getElementById("main");
-const favs = document.getElementById("favs");
+const faves = document.getElementById("faves");
 
 let favArray = [];
 
@@ -63,7 +64,6 @@ const moveCard = () => {
         "main"
           ? "toFaves"
           : "toMain";
-      console.log(direction);
       updateCollections(button.id, direction);
       updateArrays(parent,direction);
       favButtonSwap(direction, button);
@@ -72,7 +72,7 @@ const moveCard = () => {
 };
 
 const updateCollections = (id, direction) => {
-  const params = direction === "toFaves" ? [main, favs] : [favs, main];
+  const params = direction === "toFaves" ? [main, faves] : [faves, main];
   Object.values(params[0].children).map((item) => {
     if (item.id === id) {
       element = item;
@@ -107,22 +107,13 @@ const updateArrays = (parent, direction) => {
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
   }
-
-  console.log(dogData);
-  console.log(favArray);
 };
-
-
 
 ////////// SORTING //////////////
 
-// when sort is clicked , need to sort the cards living AdoptionDiv & FavDiv
-
-// need to grab and track the adoptionCardsDiv & favsDiv separately and sort only those cards
-
-// maybe use an if statement in the creating all cards function,
-
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
+
+const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 
 const sortedFrontwards = (dogs) => {
   sortedAZ = dogs.sort((a, b) => {
@@ -137,15 +128,7 @@ const sortedFrontwards = (dogs) => {
   return sortedAZ;
 };
 
-const sort = () => {
-  sortButtonAZ.addEventListener("click", () => {
-    return sortedFrontwards(dogData);
-  });
-};
-
-const sortButtonZA = document.getElementsByClassName("fa-arrow-up-z-a");
-
-const sortedBackwards = async () => {
+const sortedBackwards = (dogs) => {
   let data = dogs;
   sortedZA = data.sort((a, b) => {
     if (b.name > a.name) {
@@ -159,10 +142,25 @@ const sortedBackwards = async () => {
   return sortedZA;
 };
 
-const launchSortCardsZA = async () => {
-  const data = await sortedBackwards();
-  createAllCards(data);
+const sort = () => {
+  sortButtonAZ.addEventListener("click", () => {
+    main.innerHTML = '';
+    // faves.innerHTML = '';
+    const sorted = sortedFrontwards(dogData);
+    createAllCards(sorted);
+    // need to remove whats already existing in collections 
+    console.log(main);
+     console.log(sortedFrontwards(dogData));
+  });
+  sortButtonZA.addEventListener("click", () => {
+    main.innerHTML = '';
+    faves.innerHTML = '';
+    const sorted = sortedBackwards(favArray)
+    createAllCards(sorted)
+     console.log(sortedBackwards(favArray));
+  })
 };
+
 
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
@@ -194,6 +192,6 @@ for (const elm of openFavorites) {
 for (const elm of closeFavorites) {
   // close modal buttons
   elm.addEventListener("click", function () {
-    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+    this.parentElement.parentElement.classList.remove(isVisible);
   });
 }

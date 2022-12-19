@@ -71,7 +71,7 @@ h4 { margin: 0; }
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 20px;
   width: 350px;
   height: fit-content;
   text-align: center;
@@ -113,7 +113,7 @@ h4 { margin: 0; }
   flex-direction: column;
   margin: auto;
   gap: 2px;
-  margin-top: 125px;
+  margin-top: 90px;
 }
 
 .adoption-cards-wrapper {
@@ -220,7 +220,7 @@ h4 { margin: 0; }
   opacity: 0;
   z-index: 1000;
   width: 380px;
-  margin: 120px auto;
+  margin: 119px auto;
   height: 100%;
   overflow: scroll;
 }
