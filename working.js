@@ -1,7 +1,7 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=15&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15"
   );
   const json = await dataFetch.json();
   dogData = json.data;
@@ -40,7 +40,7 @@ const createSingleCard = (dog) => {
 };
 
 const createAllCards = (dogData) => {
-  dogData.map((eachDog) => {
+  dogData.map((eachDog) => { 
     createSingleCard(eachDog);
   });
 };
@@ -145,14 +145,14 @@ const sort = () => {
     main.innerHTML = '';
     faves.innerHTML = '';
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted);
-    moveCard();
+    createAllCards(sorted);     // maybe map and recreate single cards instead 
+    moveCard();       
   });
   sortButtonZA.addEventListener("click", () => {
     main.innerHTML = '';
     faves.innerHTML = '';
-    const sorted = sortedBackwards(favArray)
-    createAllCards(sorted)
+    const sorted = sortedBackwards(favArray);
+    createAllCards(sorted);
     moveCard();
   })
 };

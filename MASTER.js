@@ -1,14 +1,14 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=10&page=11"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15"
   );
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData); 
   moveCard();
   sort(); 
-//   totalAge(dogData);
+  totalAge(dogData);
 };
 getData();
   
@@ -40,8 +40,7 @@ const createSingleCard = (dog) => {
 };
 
 const createAllCards = (dogData) => {
-  // try turnery here for sorting
-  dogData.map((eachDog) => {
+  dogData.map((eachDog) => { 
     createSingleCard(eachDog);
   });
 };
@@ -58,7 +57,7 @@ const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
   favButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement;
+      const parent = e.target.parentElement.parentElement.parentElement; console.log(parent);
       const direction =
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
@@ -97,8 +96,8 @@ const updateArrays = (parent, direction) => {
       (element) => element._id === parent.id
     );
     const currentDog = dogData[findCardIndex];
-    favArray.push(currentDog);
     dogData.splice(findCardIndex, 1);
+    favArray.push(currentDog);
   } else if (direction === "toMain") {
     const findCardIndex = favArray.findIndex(
       (element) => element._id === parent.id
@@ -109,7 +108,7 @@ const updateArrays = (parent, direction) => {
   }
 };
 
-////////// SORTING //////////////
+////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked 
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 
@@ -129,8 +128,7 @@ const sortedFrontwards = (dogs) => {
 };
 
 const sortedBackwards = (dogs) => {
-  let data = dogs;
-  sortedZA = data.sort((a, b) => {
+  sortedZA = dogs.sort((a, b) => {
     if (b.name > a.name) {
       return 1;
     }
@@ -145,19 +143,17 @@ const sortedBackwards = (dogs) => {
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
     main.innerHTML = '';
-    // faves.innerHTML = '';
+    faves.innerHTML = '';
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted);
-    // need to remove whats already existing in collections 
-    console.log(main);
-     console.log(sortedFrontwards(dogData));
+    createAllCards(sorted);     // maybe map and recreate single cards instead 
+    moveCard();       
   });
   sortButtonZA.addEventListener("click", () => {
     main.innerHTML = '';
     faves.innerHTML = '';
-    const sorted = sortedBackwards(favArray)
-    createAllCards(sorted)
-     console.log(sortedBackwards(favArray));
+    const sorted = sortedBackwards(favArray);
+    createAllCards(sorted);
+    moveCard();
   })
 };
 
