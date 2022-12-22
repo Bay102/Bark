@@ -6,7 +6,6 @@ const getData = async () => {
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData);
-  
 };
 getData();
 
@@ -97,7 +96,7 @@ const updateArrays = (parent, direction) => {
     const currentDog = dogData[findCardIndex];
     dogData.splice(findCardIndex, 1);
     favArray.push(currentDog);
-    totalAge(favArray)
+    totalAge(favArray);
   } else if (direction === "toMain") {
     const findCardIndex = favArray.findIndex(
       (element) => element._id === parent.id
@@ -105,7 +104,7 @@ const updateArrays = (parent, direction) => {
     const currentDog = favArray[findCardIndex];
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
-    totalAge(favArray)
+    totalAge(favArray);
   }
 };
 
@@ -143,8 +142,7 @@ const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
     main.innerHTML = "";
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted); 
-    
+    createAllCards(sorted);
   });
   sortButtonZA.addEventListener("click", () => {
     main.innerHTML = "";
@@ -158,19 +156,20 @@ const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
   if (favArray.length > 0) {
-    ageArray = dogs.map((dog) => dog.age)
-  .reduce((acc, val) => acc + val);
-  getNumberDiv.innerHTML = ageArray;
+    ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
+    getNumberDiv.innerHTML = ageArray;
   } else {
-    getNumberDiv.innerHTML = '';
-    const ageDiv = document.querySelector('.age');
-    ageDiv.innerHTML = 'No Faves';
+    getNumberDiv.innerHTML = "";
+    const ageDiv = document.querySelector(".age");
+    ageDiv.innerHTML = "No Faves";
   }
-} 
+}
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
 const isVisible = "is-visible";
+const notVisible = "not-visible";
+const header = "header";
 
 // this will store any element that has "[data-open]" in a node list
 const openFavorites = document.querySelectorAll(modalOpen);
@@ -186,6 +185,8 @@ for (const elm of openFavorites) {
     } else {
       const modalId = this.dataset.open; // "this" is referring to the parent Element
       document.getElementById(modalId).classList.add(isVisible);
+      document.getElementById(header).classList.add(notVisible);
+      document.getElementById(main).style.display === 'none'
     }
   });
 }
@@ -193,7 +194,7 @@ for (const elm of openFavorites) {
 for (const elm of closeFavorites) {
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.classList.remove(isVisible);
+    document.getElementById(header).classList.remove(notVisible);
+   
   });
 }
-
-

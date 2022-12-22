@@ -152,10 +152,9 @@ h4 { margin: 0; }
 
 #faves {
   display: flex;
-  width: 375px;
+  /* width: 375px; */
   flex-direction: column;
   flex-wrap: nowrap;
-  overflow-x: scroll;
   gap: 20px;
 }
 
@@ -198,29 +197,32 @@ h4 { margin: 0; }
   align-items: center;
   background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images");
   background-size: cover;
+  padding: 0 15px;
 }
 
-.full-site-modal::-webkit-scrollbar {
-  overflow-y: hidden;
+.full-site-modal::-webkit-scrollbar { 
+  overflow:hidden;
+  width: 0;
+  height: 0;
+  background: transparent;
 }
 
 .full-site-modal {
   position: fixed;
-  top: 180px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 30px;
-  padding: 0 0 0 13px;
   transition: all 0.35s ease-in;
   background: black;
   visibility: hidden;
   opacity: 0;
   z-index: 1000;
-  width: max-content;
+  width: 390px;
   margin: auto;
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
+  z-index: 100;
 }
 
 .full-site-modal.is-visible {
@@ -253,7 +255,9 @@ h4 { margin: 0; }
   transform: translateY(-100%);
 }
 
-
+.not-visible {
+  display: none;
+}
 
 
 
