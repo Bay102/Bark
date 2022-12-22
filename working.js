@@ -64,7 +64,7 @@ const moveCard = () => {
       updateCollections(button.id, direction);
       updateArrays(parent, direction);
       favButtonSwap(direction, button);
-      totalAge(dogData);
+      totalAge(favArray);
     });
   });
 };
@@ -160,9 +160,12 @@ const sort = () => {
 const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
-  ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
+  ageArray = dogs.map((dog) => dog.age)
+  .reduce((acc, val) => acc + val);
   getNumberDiv.innerHTML = ageArray;
 }
+
+
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";

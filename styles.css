@@ -68,6 +68,8 @@ h4 { margin: 0; }
   flex-wrap: wrap;
   flex-direction: column;
   border-radius: 20px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
   width: 380px;
   height: fit-content;
   text-align: center;
@@ -150,6 +152,7 @@ h4 { margin: 0; }
 
 #faves {
   display: flex;
+  width: 375px;
   flex-direction: column;
   flex-wrap: nowrap;
   overflow-x: scroll;
