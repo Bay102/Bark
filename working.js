@@ -1,14 +1,9 @@
 let dogData;
 const getData = async () => {
-  dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15"
-  );
+  dataFetch = await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15");
   const json = await dataFetch.json();
   dogData = json.data;
   createAllCards(dogData); 
-  moveCard();
-  sort(); 
-  totalAge(dogData);
 };
 getData();
   
@@ -42,7 +37,9 @@ const createSingleCard = (dog) => {
 const createAllCards = (dogData) => {
   dogData.map((eachDog) => { 
     createSingleCard(eachDog);
-  });
+  });  
+  moveCard(); 
+  sort(); 
 };
 
 
@@ -57,7 +54,7 @@ const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
   favButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement; console.log(parent);
+      const parent = e.target.parentElement.parentElement.parentElement; 
       const direction =
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
@@ -66,6 +63,7 @@ const moveCard = () => {
       updateCollections(button.id, direction);
       updateArrays(parent,direction);
       favButtonSwap(direction, button);
+      totalAge(dogData);
     });
   });
 };
@@ -115,7 +113,7 @@ const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 
 const sortedFrontwards = (dogs) => {
-  sortedAZ = dogs.sort((a, b) => {
+   dogs.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -124,11 +122,11 @@ const sortedFrontwards = (dogs) => {
     }
     return 0;
   });
-  return sortedAZ;
+  return dogs;
 };
 
 const sortedBackwards = (dogs) => {
-  sortedZA = dogs.sort((a, b) => {
+  dogs.sort((a, b) => {
     if (b.name > a.name) {
       return 1;
     }
@@ -137,7 +135,7 @@ const sortedBackwards = (dogs) => {
     }
     return 0;
   });
-  return sortedZA;
+  return dogs;
 };
 
 const sort = () => {
@@ -151,7 +149,7 @@ const sort = () => {
   sortButtonZA.addEventListener("click", () => {
     main.innerHTML = '';
     faves.innerHTML = '';
-    const sorted = sortedBackwards(favArray);
+    const sorted = sortedBackwards(dogData);
     createAllCards(sorted);
     moveCard();
   })
@@ -165,6 +163,14 @@ function totalAge(dogs) {
   ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
   getNumberDiv.innerHTML = ageArray;
 }
+
+
+
+
+
+
+
+
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
