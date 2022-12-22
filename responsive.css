@@ -1,6 +1,7 @@
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 390px) {
    body {
      margin: auto;
+     overflow-x: hidden;
    }
  /*  */
    h2 {
@@ -32,6 +33,15 @@
      flex-direction: column;
      text-align: left;
      line-height: 0.15;
+   }
+
+   #favorites {
+    width: 100%;
+    margin-top: 3px;
+   }
+
+   .modal-header {
+    padding: 0 8px;
    }
  }
  

@@ -1,12 +1,14 @@
 let dogData;
 const getData = async () => {
-  dataFetch = await fetch("https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15");
+  dataFetch = await fetch(
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15"
+  );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData); 
+  createAllCards(dogData);
 };
 getData();
-  
+
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -35,13 +37,12 @@ const createSingleCard = (dog) => {
 };
 
 const createAllCards = (dogData) => {
-  dogData.map((eachDog) => { 
+  dogData.map((eachDog) => {
     createSingleCard(eachDog);
-  });  
-  moveCard(); 
-  sort(); 
+  });
+  moveCard();
+  sort();
 };
-
 
 /////// FAVORITE / UN-FAVORITE /////////
 
@@ -54,14 +55,14 @@ const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
   favButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement; 
+      const parent = e.target.parentElement.parentElement.parentElement;
       const direction =
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
           ? "toFaves"
           : "toMain";
       updateCollections(button.id, direction);
-      updateArrays(parent,direction);
+      updateArrays(parent, direction);
       favButtonSwap(direction, button);
       totalAge(dogData);
     });
@@ -106,14 +107,14 @@ const updateArrays = (parent, direction) => {
   }
 };
 
-////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked 
+////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 
 const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 
 const sortedFrontwards = (dogs) => {
-   dogs.sort((a, b) => {
+  dogs.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -140,21 +141,20 @@ const sortedBackwards = (dogs) => {
 
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
-    main.innerHTML = '';
-    faves.innerHTML = '';
+    main.innerHTML = "";
+    faves.innerHTML = "";
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted);     // maybe map and recreate single cards instead 
-    moveCard();       
+    createAllCards(sorted); // maybe map and recreate single cards instead
+    moveCard();
   });
   sortButtonZA.addEventListener("click", () => {
-    main.innerHTML = '';
-    faves.innerHTML = '';
+    main.innerHTML = "";
+    faves.innerHTML = "";
     const sorted = sortedBackwards(dogData);
     createAllCards(sorted);
     moveCard();
-  })
+  });
 };
-
 
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
@@ -163,14 +163,6 @@ function totalAge(dogs) {
   ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
   getNumberDiv.innerHTML = ageArray;
 }
-
-
-
-
-
-
-
-
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
@@ -186,8 +178,12 @@ const closeFavorites = document.querySelectorAll(modalClose);
 for (const elm of openFavorites) {
   // open Modal buttons
   elm.addEventListener("click", function () {
-    const modalId = this.dataset.open; // "this" is referring to the parent Element
-    document.getElementById(modalId).classList.add(isVisible);
+    if (favArray.length === 0) {
+      alert("YOU HAVE NO FAVORITES! try adding some :) ");
+    } else {
+      const modalId = this.dataset.open; // "this" is referring to the parent Element
+      document.getElementById(modalId).classList.add(isVisible);
+    }
   });
 }
 
