@@ -5,13 +5,11 @@ const getData = async () => {
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData); 
-  moveCard();
-  sort(); 
-  totalAge(dogData);
+  createAllCards(dogData);
+  
 };
 getData();
-  
+
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -40,11 +38,12 @@ const createSingleCard = (dog) => {
 };
 
 const createAllCards = (dogData) => {
-  dogData.map((eachDog) => { 
+  dogData.map((eachDog) => {
     createSingleCard(eachDog);
   });
+  moveCard();
+  sort();
 };
-
 
 /////// FAVORITE / UN-FAVORITE /////////
 
@@ -57,14 +56,14 @@ const moveCard = () => {
   const favButtons = document.querySelectorAll(".fa-heart-circle-plus");
   favButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const parent = e.target.parentElement.parentElement.parentElement; console.log(parent);
+      const parent = e.target.parentElement.parentElement.parentElement;
       const direction =
         button.parentElement.parentElement.parentElement.parentElement.id ===
         "main"
           ? "toFaves"
           : "toMain";
       updateCollections(button.id, direction);
-      updateArrays(parent,direction);
+      updateArrays(parent, direction);
       favButtonSwap(direction, button);
     });
   });
@@ -98,6 +97,7 @@ const updateArrays = (parent, direction) => {
     const currentDog = dogData[findCardIndex];
     dogData.splice(findCardIndex, 1);
     favArray.push(currentDog);
+    totalAge(favArray)
   } else if (direction === "toMain") {
     const findCardIndex = favArray.findIndex(
       (element) => element._id === parent.id
@@ -105,17 +105,15 @@ const updateArrays = (parent, direction) => {
     const currentDog = favArray[findCardIndex];
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
+    totalAge(favArray)
   }
 };
 
-////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked 
+////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
-
-const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
-
 const sortedFrontwards = (dogs) => {
-  sortedAZ = dogs.sort((a, b) => {
+  dogs.sort((a, b) => {
     if (a.name > b.name) {
       return 1;
     }
@@ -124,11 +122,12 @@ const sortedFrontwards = (dogs) => {
     }
     return 0;
   });
-  return sortedAZ;
+  return dogs;
 };
 
+const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 const sortedBackwards = (dogs) => {
-  sortedZA = dogs.sort((a, b) => {
+  dogs.sort((a, b) => {
     if (b.name > a.name) {
       return 1;
     }
@@ -137,34 +136,37 @@ const sortedBackwards = (dogs) => {
     }
     return 0;
   });
-  return sortedZA;
+  return dogs;
 };
 
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
-    main.innerHTML = '';
-    faves.innerHTML = '';
+    main.innerHTML = "";
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted);     // maybe map and recreate single cards instead 
-    moveCard();       
+    createAllCards(sorted); 
+    
   });
   sortButtonZA.addEventListener("click", () => {
-    main.innerHTML = '';
-    faves.innerHTML = '';
-    const sorted = sortedBackwards(favArray);
+    main.innerHTML = "";
+    const sorted = sortedBackwards(dogData);
     createAllCards(sorted);
-    moveCard();
-  })
+  });
 };
-
 
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
-  ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
+  if (favArray.length > 0) {
+    ageArray = dogs.map((dog) => dog.age)
+  .reduce((acc, val) => acc + val);
   getNumberDiv.innerHTML = ageArray;
-}
+  } else {
+    getNumberDiv.innerHTML = '';
+    const ageDiv = document.querySelector('.age');
+    ageDiv.innerHTML = 'No Faves';
+  }
+} 
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
@@ -178,16 +180,20 @@ const closeFavorites = document.querySelectorAll(modalClose);
 
 // for of loop to iterate through node list of queried elements and adding eventlistener to each one
 for (const elm of openFavorites) {
-  // open Modal buttons
   elm.addEventListener("click", function () {
-    const modalId = this.dataset.open; // "this" is referring to the parent Element
-    document.getElementById(modalId).classList.add(isVisible);
+    if (favArray.length === 0) {
+      alert("YOU HAVE NO FAVORITES! try adding some :) ");
+    } else {
+      const modalId = this.dataset.open; // "this" is referring to the parent Element
+      document.getElementById(modalId).classList.add(isVisible);
+    }
   });
 }
 
 for (const elm of closeFavorites) {
-  // close modal buttons
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.classList.remove(isVisible);
   });
 }
+
+

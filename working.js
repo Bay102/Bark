@@ -64,7 +64,6 @@ const moveCard = () => {
       updateCollections(button.id, direction);
       updateArrays(parent, direction);
       favButtonSwap(direction, button);
-      totalAge(favArray);
     });
   });
 };
@@ -97,6 +96,7 @@ const updateArrays = (parent, direction) => {
     const currentDog = dogData[findCardIndex];
     dogData.splice(findCardIndex, 1);
     favArray.push(currentDog);
+    totalAge(favArray)
   } else if (direction === "toMain") {
     const findCardIndex = favArray.findIndex(
       (element) => element._id === parent.id
@@ -104,15 +104,13 @@ const updateArrays = (parent, direction) => {
     const currentDog = favArray[findCardIndex];
     favArray.splice(findCardIndex, 1);
     dogData.push(currentDog);
+    totalAge(favArray)
   }
 };
 
 ////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
-
-const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
-
 const sortedFrontwards = (dogs) => {
   dogs.sort((a, b) => {
     if (a.name > b.name) {
@@ -126,6 +124,7 @@ const sortedFrontwards = (dogs) => {
   return dogs;
 };
 
+const sortButtonZA = document.querySelector(".fa-arrow-up-z-a");
 const sortedBackwards = (dogs) => {
   dogs.sort((a, b) => {
     if (b.name > a.name) {
@@ -142,17 +141,14 @@ const sortedBackwards = (dogs) => {
 const sort = () => {
   sortButtonAZ.addEventListener("click", () => {
     main.innerHTML = "";
-    faves.innerHTML = "";
     const sorted = sortedFrontwards(dogData);
-    createAllCards(sorted); // maybe map and recreate single cards instead
-    moveCard();
+    createAllCards(sorted); 
+    
   });
   sortButtonZA.addEventListener("click", () => {
     main.innerHTML = "";
-    faves.innerHTML = "";
     const sorted = sortedBackwards(dogData);
     createAllCards(sorted);
-    moveCard();
   });
 };
 
@@ -160,12 +156,16 @@ const sort = () => {
 const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
-  ageArray = dogs.map((dog) => dog.age)
+  if (favArray.length > 0) {
+    ageArray = dogs.map((dog) => dog.age)
   .reduce((acc, val) => acc + val);
   getNumberDiv.innerHTML = ageArray;
-}
-
-
+  } else {
+    getNumberDiv.innerHTML = '';
+    const ageDiv = document.querySelector('.age');
+    ageDiv.innerHTML = '';
+  }
+} 
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
