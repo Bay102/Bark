@@ -188,7 +188,7 @@ for (const elm of openFavorites) {
       const modalId = this.dataset.open; // "this" is referring to the parent Element
       document.getElementById(modalId).classList.add(isVisible);
       document.getElementById(header).classList.add(notVisible);
-      // document.getElementById(main).style.display === "none";
+ 
     }
   });
 };
