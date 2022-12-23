@@ -69,9 +69,10 @@ h4 { margin: 0; }
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  border: 8px outset #FAB162;
   border-radius: 20px;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  /* border-bottom-right-radius: 0px; */
+  /* border-bottom-left-radius: 0px; */
   width: 380px;
   height: fit-content;
   text-align: center;
@@ -93,7 +94,7 @@ h4 { margin: 0; }
 .card-header-img {
   width: 40px;
   height: 40px;
-  border: 1px solid white;
+  border: 2px solid #FAB162 ;
   border-radius: 180px;
   margin-right: 15px;
   margin-left: 8px;
@@ -101,11 +102,11 @@ h4 { margin: 0; }
 }
 
 .textarea {
-  width: 97%;
-  border-radius: 2px;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   margin: auto;
   height: 45px;
-  margin-bottom: 2px;
 }
 
 #main {
@@ -169,17 +170,29 @@ h4 { margin: 0; }
   border-radius: 10px;
 }
 
+.fa-solid {
+  color: #FAB162;
+}
 
-.fa-solid,
+.fa-heart-circle-plus,
+.fa-heart-crack {
+  color: pink;
+  font-size: 25px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
+
 .fa-regular,
 .fa-share-from-square,
 .fa-hand-holding-dollar {
   font-size: 25px;
-  margin: 0;
   margin-left: 5px;
   margin-right: 15px;
   margin-bottom: 15px;
-  color: pink;
+  color: #FAB162;
   cursor: pointer;
 }
 
@@ -200,6 +213,7 @@ h4 { margin: 0; }
   background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images");
   background-size: cover;
   padding: 0 15px;
+  color: white;
 }
 
 .full-site-modal::-webkit-scrollbar { 
