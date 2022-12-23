@@ -156,7 +156,8 @@ const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
   if (favArray.length > 0) {
-    ageArray = dogs.map((dog) => dog.age).reduce((acc, val) => acc + val);
+    ageArray = dogs.map((dog) => dog.age)
+    .reduce((acc, val) => Math.round(acc + val / favArray.length));
     getNumberDiv.innerHTML = ageArray;
   } else {
     getNumberDiv.innerHTML = "";
