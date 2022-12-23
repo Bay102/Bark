@@ -1,7 +1,7 @@
 body {
   /* background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images"); */
   background-size:155%;
-  color: white;
+  /* color: white; */
   overflow-x: hidden;
   
 }
@@ -20,6 +20,7 @@ h4 { margin: 0; }
   /* background-color: black; */
   width: 500px;
   margin: 0 auto 5px auto;
+  color: white;
   /* border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px; */
  
@@ -64,6 +65,7 @@ h4 { margin: 0; }
 
 .cardsClass {
   background-color: black;
+  color: white;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;

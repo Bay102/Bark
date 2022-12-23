@@ -163,7 +163,7 @@ function totalAge(dogs) {
     const ageDiv = document.querySelector(".age");
     ageDiv.innerHTML = "No Faves";
   }
-}
+};
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
@@ -177,6 +177,7 @@ const openFavorites = document.querySelectorAll(modalOpen);
 // this will store any element that has "[data-close]" in a node list
 const closeFavorites = document.querySelectorAll(modalClose);
 
+
 // for of loop to iterate through node list of queried elements and adding eventlistener to each one
 for (const elm of openFavorites) {
   elm.addEventListener("click", function () {
@@ -186,15 +187,14 @@ for (const elm of openFavorites) {
       const modalId = this.dataset.open; // "this" is referring to the parent Element
       document.getElementById(modalId).classList.add(isVisible);
       document.getElementById(header).classList.add(notVisible);
-      document.getElementById(main).style.display === 'none'
+      // document.getElementById(main).style.display === "none";
     }
   });
-}
+};
 
 for (const elm of closeFavorites) {
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.classList.remove(isVisible);
     document.getElementById(header).classList.remove(notVisible);
-   
   });
-}
+};

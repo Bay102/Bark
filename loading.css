@@ -3,7 +3,7 @@
 
 .loading-screen {
    display: none; /* Hide the loading screen by default */
-   background-color: black; /* Set the background color */
+   background-color: #191919; /* Set the background color */
    position: fixed; /* Position the element on the page */
    top: 0;
    left: 0;
@@ -26,7 +26,7 @@
   font-family: 'Staatliches', sans-serif;
   text-transform: uppercase;
   font-display: swap;
-  text-shadow: 0 0 10px rgb(228, 119, 255);
+  text-shadow: 0 0 10px #FAB162;
 }
 
 .jt__row {
@@ -92,14 +92,13 @@
   }
 }
 
-
-
 .debug .jt__row:nth-child(even) {
   color: black;
   background: white;
 }
 .debug .jt__row:nth-child(odd) {
-  color: white;
+  color:#FAB162
+  ;
   background: black;
 }
 
@@ -108,13 +107,15 @@
 html, body {
   margin: 0;
   background: rgb(37 37 37);
-  color: pink;
   height: 100%;
 }
 
-/* body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-} */
+.load-icon {
+  font-size: 50px;
+}
+
+.jt__text i {
+  font-size: 150px;
+  color: #FAB162;
+}
+
