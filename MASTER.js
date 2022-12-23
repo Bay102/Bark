@@ -9,6 +9,9 @@ const getData = async () => {
 };
 getData();
 
+
+
+
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -165,6 +168,11 @@ function totalAge(dogs) {
     ageDiv.innerHTML = "No Faves";
   }
 };
+
+
+// Closing & Opening Faves  ///
+
+
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
