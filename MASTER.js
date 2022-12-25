@@ -9,9 +9,6 @@ const getData = async () => {
 };
 getData();
 
-
-
-
 const createSingleCard = (dog) => {
   dogDiv = document.createElement("div");
   dogDiv.classList.add("dog");
@@ -44,7 +41,6 @@ const createAllCards = (dogData) => {
     createSingleCard(eachDog);
   });
   moveCard();
-  sort();
 };
 
 /////// FAVORITE / UN-FAVORITE /////////
@@ -141,38 +137,35 @@ const sortedBackwards = (dogs) => {
   return dogs;
 };
 
-const sort = () => {
-  sortButtonAZ.addEventListener("click", () => {
+const sort = (AZ, ZA) => {
+  AZ.addEventListener("click", () => {
     main.innerHTML = "";
     const sorted = sortedFrontwards(dogData);
     createAllCards(sorted);
   });
-  sortButtonZA.addEventListener("click", () => {
+  ZA.addEventListener("click", () => {
     main.innerHTML = "";
     const sorted = sortedBackwards(dogData);
     createAllCards(sorted);
   });
 };
+sort(sortButtonAZ, sortButtonZA);
 
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
 
 function totalAge(dogs) {
   if (favArray.length > 0) {
-    ageArray = dogs.map((dog) => dog.age)
-    .reduce((acc, val) => Math.round(acc + val / favArray.length));
+    let ageArray = dogs
+      .map((dog) => dog.age)
+      .reduce((acc, val) => Math.round((acc + val) / favArray.length));
     getNumberDiv.innerHTML = ageArray;
   } else {
     getNumberDiv.innerHTML = "";
     const ageDiv = document.querySelector(".age");
     ageDiv.innerHTML = "No Faves";
   }
-};
-
-
-// Closing & Opening Faves  ///
-
-
+}
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
@@ -186,24 +179,22 @@ const openFavorites = document.querySelectorAll(modalOpen);
 // this will store any element that has "[data-close]" in a node list
 const closeFavorites = document.querySelectorAll(modalClose);
 
-
 // for of loop to iterate through node list of queried elements and adding eventlistener to each one
 for (const elm of openFavorites) {
   elm.addEventListener("click", function () {
     if (favArray.length === 0) {
       alert("YOU HAVE NO FAVORITES! try adding some :) ");
     } else {
-      const modalId = this.dataset.open; // "this" is referring to the parent Element
+      const modalId = this.dataset.open;
       document.getElementById(modalId).classList.add(isVisible);
       document.getElementById(header).classList.add(notVisible);
- 
     }
   });
-};
+}
 
 for (const elm of closeFavorites) {
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.classList.remove(isVisible);
     document.getElementById(header).classList.remove(notVisible);
   });
-};
+}
