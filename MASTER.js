@@ -1,3 +1,4 @@
+//////// FETCH / DISPLAY CARDS ////// 
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
@@ -107,7 +108,7 @@ const updateArrays = (parent, direction) => {
   }
 };
 
-////////// SORTING ////////////// --- still a bug that favs always get cleared out when sort is clicked
+////////// SORTING ////////////// 
 
 const sortButtonAZ = document.querySelector(".fa-arrow-down-a-z");
 const sortedFrontwards = (dogs) => {
@@ -154,18 +155,17 @@ sort(sortButtonAZ, sortButtonZA);
 ////// Total Age /////////
 const getNumberDiv = document.querySelector(".number");
 
-function totalAge(dogs) {
-  if (favArray.length > 0) {
+const totalAge = (dogs) => {
+  if (favArray.length >= 0) {
     let ageArray = dogs
       .map((dog) => dog.age)
-      .reduce((acc, val) => Math.round((acc + val) / favArray.length));
+      .reduce((acc, val) => acc + val / favArray.length, 0)
+      .toFixed(1);
     getNumberDiv.innerHTML = ageArray;
-  } else {
-    getNumberDiv.innerHTML = "";
-    const ageDiv = document.querySelector(".age");
-    ageDiv.innerHTML = "No Faves";
   }
-}
+};
+
+////////  Open/Close Faves  ///////
 
 const modalOpen = "[data-open]";
 const modalClose = "[data-close]";
@@ -173,13 +173,8 @@ const isVisible = "is-visible";
 const notVisible = "not-visible";
 const header = "header";
 
-// this will store any element that has "[data-open]" in a node list
 const openFavorites = document.querySelectorAll(modalOpen);
 
-// this will store any element that has "[data-close]" in a node list
-const closeFavorites = document.querySelectorAll(modalClose);
-
-// for of loop to iterate through node list of queried elements and adding eventlistener to each one
 for (const elm of openFavorites) {
   elm.addEventListener("click", function () {
     if (favArray.length === 0) {
@@ -192,6 +187,7 @@ for (const elm of openFavorites) {
   });
 }
 
+const closeFavorites = document.querySelectorAll(modalClose);
 for (const elm of closeFavorites) {
   elm.addEventListener("click", function () {
     this.parentElement.parentElement.classList.remove(isVisible);
