@@ -1,5 +1,0 @@
-Sort A-Z & Z-A 
-Display total of something from data 
-Filter Button 
-Multipal Pics on Cards 
-Live comments

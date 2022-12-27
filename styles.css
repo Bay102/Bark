@@ -1,7 +1,6 @@
 body {
   /* background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapercave.com%2Fwp%2Fwp4386584.jpg&f=1&nofb=1&ipt=acc6df12c64f7a382134b6a9077a5579fd6bca4a03553c80b1bc83cb941b50e9&ipo=images"); */
-  background-size:155%;
-  /* color: white; */
+  background-size: 155%;
   overflow-x: hidden;
 }
 
@@ -10,9 +9,13 @@ ul {
   padding: 0;
 }
 
-h2 { margin: 0; }
+h2 {
+  margin: 0;
+}
 
-h4 { margin: 0; }
+h4 {
+  margin: 0;
+}
 
 .site-header {
   width: 500px;
@@ -29,9 +32,13 @@ h4 { margin: 0; }
   font-family: copperplate;
 }
 
-.navbar-nav { margin-left: auto; }
+.navbar-nav {
+  margin-left: auto;
+}
 
-.nav-logo { width: 100px; }
+.nav-logo {
+  width: 100px;
+}
 
 .nav-text {
   text-align: center;
@@ -39,7 +46,9 @@ h4 { margin: 0; }
   font-size: 20px;
 }
 
-.brand-logo { padding: 10px; }
+.brand-logo {
+  padding: 10px;
+}
 
 .brand-logo a h2 {
   font-size: 1.5rem;
@@ -47,7 +56,9 @@ h4 { margin: 0; }
   line-height: 1.42;
 }
 
-.main-menu { display: flex; }
+.main-menu {
+  display: flex;
+}
 
 .main-menu .nav-item {
   padding: 8px;
@@ -59,7 +70,7 @@ h4 { margin: 0; }
 
 .cardsClass {
   background-color: rgba(213, 198, 198, 0.986);
-  color:  black;
+  color: black;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -168,26 +179,25 @@ h4 { margin: 0; }
 }
 
 .faves-lower-header {
-  color: #FAB162;
+  color: #fab162;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .fa-solid {
-  color: #FAB162;
+  color: #fab162;
 }
 
 .fa-heart-circle-plus,
 .fa-heart-crack {
-  color: pink;
+  color: #ff7990;
   font-size: 25px;
   cursor: pointer;
   margin-left: 5px;
   margin-right: 15px;
   margin-bottom: 15px;
 }
-
 
 .fa-regular,
 .fa-share-from-square,
@@ -196,19 +206,22 @@ h4 { margin: 0; }
   margin-left: 5px;
   margin-right: 15px;
   margin-bottom: 15px;
-  color: #FAB162;
+  color: #fab162;
   cursor: pointer;
 }
-
 
 .fa-share-from-square,
 .fa-regular {
   color: rgba(0, 0, 0, 0.872);
 }
 
-.fa-share-from-square { margin-left: auto; }
+.fa-share-from-square {
+  margin-left: auto;
+}
 
-.fa-hand-holding-dollar { color: green; }
+.fa-hand-holding-dollar {
+  color: green;
+}
 
 .modal-header {
   display: flex;
@@ -219,8 +232,8 @@ h4 { margin: 0; }
   color: white;
 }
 
-.full-site-modal::-webkit-scrollbar { 
-  overflow:hidden;
+.full-site-modal::-webkit-scrollbar {
+  overflow: hidden;
   width: 0;
   height: 0;
   background: transparent;
@@ -248,7 +261,6 @@ h4 { margin: 0; }
   visibility: visible;
   opacity: 1;
   z-index: 1;
-  
 }
 
 [data-animation="zoomInOut"].full-site-modal {
@@ -287,19 +299,12 @@ h4 { margin: 0; }
   border-radius: 10px;
 }
 
+.empty-collection h3 {
+  padding: 10px 0;
+}
+
 .empty-collection img {
   width: 200px;
   height: 200px;
   border-radius: 20px;
 }
-
-
-
-
-
-
-
-
-
-
-

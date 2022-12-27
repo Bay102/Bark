@@ -2,7 +2,7 @@
 let dogData;
 const getData = async () => {
   dataFetch = await fetch(
-    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=20&page=15"
+    "https://freerandomapi.cyclic.app/api/v1/dogs?limit=40&page=15"
   );
   const json = await dataFetch.json();
   dogData = json.data;
