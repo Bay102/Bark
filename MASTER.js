@@ -6,7 +6,7 @@ const getData = async () => {
   );
   const json = await dataFetch.json();
   dogData = json.data;
-  createAllCards(dogData);
+  createAllCards(dogData);   
 };
 getData();
 
@@ -64,6 +64,7 @@ const moveCard = () => {
       updateCollections(button.id, direction);
       updateArrays(parent, direction);
       favButtonSwap(direction, button);
+      emptyCollection();
     });
   });
 };
@@ -107,6 +108,15 @@ const updateArrays = (parent, direction) => {
     totalAge(favArray);
   }
 };
+
+const emptyCollection = () => {
+  if (dogData.length === 0) {
+    const empty = document.getElementById('empty');
+    empty.classList.remove('not-visible')
+  } else {
+    empty.classList.add('not-visible');
+  }
+}
 
 ////////// SORTING ////////////// 
 
